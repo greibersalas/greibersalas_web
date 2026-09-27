@@ -1,0 +1,42 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import LegalValue from '../../components/LegalValue.astro';
+import { legal } from '../../config';
+import { routePath } from '../../i18n';
+---
+<LegalLayout title="Legal notice" description="Legal notice and owner information for greibersalas.com.">
+  <p><em>This is a translation provided for convenience. In case of discrepancy, the <a href={routePath('legal', 'es')} hreflang="es">Spanish version</a> prevails.</em></p>
+
+  <h2>1. Owner information</h2>
+  <p>In accordance with article 10 of Spanish Law 34/2002 on Information Society Services and Electronic Commerce (LSSI-CE), the owner of this website is:</p>
+  <ul>
+    <li><strong>Owner:</strong> {legal.owner}</li>
+    <li><strong>Tax ID (NIF):</strong> <LegalValue value={legal.nif} /></li>
+    <li><strong>Address:</strong> <LegalValue value={legal.address} /></li>
+    <li><strong>Email:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
+    <li><strong>Website:</strong> {legal.domain}</li>
+    <li><strong>Activity:</strong> custom software development and technology consulting.</li>
+  </ul>
+
+  <h2>2. Purpose</h2>
+  <p>This website is informational: it presents the owner's professional software development services and provides ways to get in touch. Accessing and using the site makes you a user and implies acceptance of this legal notice.</p>
+
+  <h2>3. Terms of use</h2>
+  <p>Users agree to use the website and its content lawfully and appropriately, and not for unlawful activities, activities contrary to good faith, or activities that may damage the site, its systems or third parties. Submitting false information or unsolicited communications through the contact form is prohibited.</p>
+
+  <h2>4. Intellectual and industrial property</h2>
+  <p>The texts, design, logo, source code and other content of this site belong to {legal.owner} unless stated otherwise, and are protected by intellectual and industrial property law. Reproduction, distribution or transformation without express permission is prohibited.</p>
+  <p>The typefaces used belong to their authors and are used under their licenses: Clash Display and Satoshi (ITF Free Font License) and JetBrains Mono (SIL Open Font License). Third-party trademarks mentioned (e.g. technologies or platforms) belong to their respective owners.</p>
+
+  <h2>5. Liability</h2>
+  <p>The owner strives to keep the published information accurate and up to date, but does not guarantee it is error-free or that the site will be available without interruption, and is not liable for damages arising from the use of the information or from service interruptions beyond their control.</p>
+
+  <h2>6. Third-party links</h2>
+  <p>This site links to third-party services (such as LinkedIn or WhatsApp). The owner does not control and is not responsible for their content or policies; their own terms apply when you visit them.</p>
+
+  <h2>7. Data protection</h2>
+  <p>The processing of the personal data you provide is described in the <a href={routePath('privacy', 'en')}>privacy policy</a>, and the use of storage technologies in the <a href={routePath('cookies', 'en')}>cookie policy</a>.</p>
+
+  <h2>8. Governing law</h2>
+  <p>This legal notice is governed by Spanish law. Any dispute will be resolved by the courts that have jurisdiction under applicable law; where the user is a consumer, those of the user's place of residence.</p>
+</LegalLayout>

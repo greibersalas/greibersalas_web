@@ -1,0 +1,56 @@
+---
+// Layout for legal pages (legal notice, privacy, cookies): header, readable prose column, footer.
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { legal } from '../config';
+import { getLang, localizedPath } from '../i18n';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].legal;
+
+if (!legal.nif || !legal.address) {
+  console.warn(`[legal] ${Astro.url.pathname}: legal.nif / legal.address are empty in src/config.ts (required by LSSI-CE art. 10).`);
+}
+---
+<Base title={`${title} — Greiber Salas`} description={description}>
+  <Header />
+  <main id="main" tabindex="-1" class="legal-main">
+    <article class="container legal">
+      <a href={localizedPath('/', lang)} class="legal-back">{t.back}</a>
+      <h1>{title}</h1>
+      <p class="legal-updated mono">{t.updated}: {legal.updated}</p>
+      <slot />
+    </article>
+  </main>
+  <Footer />
+</Base>
+<style>
+  .legal-main { padding: 60px 0 100px; position: relative; z-index: 1; }
+  .legal { max-width: 780px; }
+  .legal-back { display: inline-block; font-size: 0.92rem; color: var(--gs-blue-bright); margin-bottom: 28px; }
+  .legal-back:hover { color: var(--text); }
+  .legal h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 10px; }
+  .legal-updated { font-size: 0.8rem; color: var(--text-3); margin-bottom: 40px; }
+  /* Slotted content belongs to each page, so it needs :global() */
+  .legal :global(h2) { font-size: 1.4rem; margin: 40px 0 14px; }
+  .legal :global(h3) { font-size: 1.1rem; margin: 26px 0 10px; }
+  .legal :global(p), .legal :global(li) { color: var(--text-2); font-size: 1rem; }
+  .legal :global(p) { margin-bottom: 14px; }
+  .legal :global(ul) { padding-left: 22px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .legal :global(a) { color: var(--gs-blue-bright); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .legal :global(strong) { color: var(--text); }
+  .legal :global(.pending) { color: #ffb86c; }
+  .legal :global(.table-wrap) { overflow-x: auto; margin: 10px 0 20px; }
+  .legal :global(table) { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 560px; }
+  .legal :global(th), .legal :global(td) { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); color: var(--text-2); vertical-align: top; }
+  .legal :global(th) { color: var(--text); font-family: var(--font-display); font-weight: 500; background: var(--surface); }
+  .legal :global(button.inline-link) { font: inherit; color: var(--gs-blue-bright); background: none; border: none; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+</style>

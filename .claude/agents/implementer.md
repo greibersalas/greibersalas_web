@@ -17,7 +17,8 @@ You are the implementation engineer for **gs-web**, the marketing/portfolio site
 - **Other pages:** `src/pages/404.astro` (noindex), `src/pages/sitemap.xml.ts` (dependency-free sitemap). `Base.astro` accepts `title`, `description`, `noindex` props and builds canonical/og:url from `Astro.url`.
 - **Content:** typed per-language data in `src/data/site.ts` (`content[lang]`) and `src/i18n/ui.ts` (`ui[lang]`). Never hardcode copy in components.
 - **Accessibility baseline already in place:** skip link, global `:focus-visible`, `.sr-only`, global `prefers-reduced-motion` override, `.reveal` gated behind `html.js`, accessible burger menu (aria-expanded, Escape, outside click). Keep it that way.
-- See `README.md` for conventions.
+- **Config & integrations:** `src/config.ts` (contact channels, Umami ID, legal identity); PHP form handler `public/api/contact.php`; consent banner `CookieConsent.astro` is the only place optional scripts load. Translated-slug pages must be registered in `routes` in `src/i18n/index.ts`.
+- See `README.md` and `CLAUDE.md` for conventions and gotchas.
 - **Git:** repo with remote `origin` (github.com/greibersalas/greibersalas_web). Do not commit or push unless the task explicitly says so; the orchestrator handles commits.
 
 ## Rules

@@ -1,0 +1,40 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import LegalValue from '../components/LegalValue.astro';
+import { legal } from '../config';
+import { routePath } from '../i18n';
+---
+<LegalLayout title="Aviso legal" description="Aviso legal e información del titular de greibersalas.com.">
+  <h2>1. Datos identificativos</h2>
+  <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de los datos del titular de este sitio web:</p>
+  <ul>
+    <li><strong>Titular:</strong> {legal.owner}</li>
+    <li><strong>NIF:</strong> <LegalValue value={legal.nif} /></li>
+    <li><strong>Domicilio:</strong> <LegalValue value={legal.address} /></li>
+    <li><strong>Email:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
+    <li><strong>Sitio web:</strong> {legal.domain}</li>
+    <li><strong>Actividad:</strong> desarrollo de software a medida y consultoría tecnológica.</li>
+  </ul>
+
+  <h2>2. Objeto</h2>
+  <p>Este sitio web tiene carácter informativo: presenta los servicios profesionales de desarrollo de software de su titular y ofrece medios para contactar con él. El acceso y uso del sitio atribuye la condición de usuario e implica la aceptación de este aviso legal.</p>
+
+  <h2>3. Condiciones de uso</h2>
+  <p>El usuario se compromete a hacer un uso adecuado y lícito del sitio web y de sus contenidos, y a no emplearlos para actividades ilícitas, contrarias a la buena fe o que puedan dañar el sitio, sus sistemas o a terceros. El envío de información falsa o de comunicaciones no solicitadas a través del formulario de contacto está prohibido.</p>
+
+  <h2>4. Propiedad intelectual e industrial</h2>
+  <p>Los textos, el diseño, el logotipo, el código fuente y demás contenidos de este sitio son titularidad de {legal.owner}, salvo que se indique lo contrario, y están protegidos por la normativa de propiedad intelectual e industrial. Queda prohibida su reproducción, distribución o transformación sin autorización expresa.</p>
+  <p>Las tipografías utilizadas pertenecen a sus autores y se usan conforme a sus licencias: Clash Display y Satoshi (ITF Free Font License) y JetBrains Mono (SIL Open Font License). Las marcas de terceros mencionadas (por ejemplo, tecnologías o plataformas) pertenecen a sus respectivos titulares.</p>
+
+  <h2>5. Responsabilidad</h2>
+  <p>El titular procura que la información publicada sea correcta y esté actualizada, pero no garantiza la ausencia de errores ni la disponibilidad ininterrumpida del sitio. No se hace responsable de los daños derivados del uso de la información publicada ni de interrupciones del servicio ajenas a su control.</p>
+
+  <h2>6. Enlaces a terceros</h2>
+  <p>Este sitio contiene enlaces a servicios de terceros (como LinkedIn o WhatsApp). El titular no controla ni se responsabiliza de sus contenidos ni de sus políticas; al acceder a ellos se aplican sus propias condiciones.</p>
+
+  <h2>7. Protección de datos</h2>
+  <p>El tratamiento de los datos personales que facilites se describe en la <a href={routePath('privacy', 'es')}>política de privacidad</a>, y el uso de tecnologías de almacenamiento en la <a href={routePath('cookies', 'es')}>política de cookies</a>.</p>
+
+  <h2>8. Legislación aplicable</h2>
+  <p>Este aviso legal se rige por la legislación española. Para la resolución de cualquier controversia serán competentes los juzgados y tribunales que correspondan conforme a la normativa aplicable; cuando el usuario tenga la condición de consumidor, los de su domicilio.</p>
+</LegalLayout>

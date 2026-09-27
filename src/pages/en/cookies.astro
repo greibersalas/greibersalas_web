@@ -1,0 +1,46 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { consentConfig } from '../../config';
+import { routePath } from '../../i18n';
+
+const months = Math.round(consentConfig.maxAgeDays / 30);
+---
+<LegalLayout title="Cookie policy" description="Which storage and analytics technologies greibersalas.com uses and how to manage them.">
+  <p><em>This is a translation provided for convenience. In case of discrepancy, the <a href={routePath('cookies', 'es')} hreflang="es">Spanish version</a> prevails.</em></p>
+
+  <h2>1. What are cookies?</h2>
+  <p>Cookies and similar technologies (such as the browser's local storage) store or read information on your device. Article 22.2 of the Spanish LSSI-CE requires informing you and asking for consent, except for strictly necessary ones.</p>
+
+  <h2>2. What does this site use?</h2>
+  <p><strong>This site does not set its own or third-party cookies.</strong> It only uses:</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Type</th><th>Purpose</th><th>Duration</th><th>Consent</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>{consentConfig.storageKey}</code></td>
+          <td>Local storage (first-party)</td>
+          <td>Remember your privacy choice.</td>
+          <td>{months} months</td>
+          <td>Not required (technical)</td>
+        </tr>
+        <tr>
+          <td>Umami (cloud.umami.is)</td>
+          <td>Cookie-free analytics (third-party)</td>
+          <td>Anonymous, aggregated statistics of visits and clicks on contact buttons.</td>
+          <td>Stores nothing on your device</td>
+          <td>Yes — only loaded if you accept</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. Linked external services</h2>
+  <p>Links to LinkedIn and WhatsApp take you to third-party services. Their own privacy and cookie policies apply when you open them; this site doesn't load any content from those services.</p>
+
+  <h2>4. How to manage your choice</h2>
+  <p>You can accept, reject or change your choice at any time from <button type="button" class="inline-link" data-cc-open>Cookie settings</button> (also available in the footer). Your choice is renewed every {months} months. You can also clear local storage from your browser settings.</p>
+  <p>More information on data processing in the <a href={routePath('privacy', 'en')}>privacy policy</a>.</p>
+</LegalLayout>

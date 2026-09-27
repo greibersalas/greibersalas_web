@@ -1,0 +1,44 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { consentConfig } from '../config';
+import { routePath } from '../i18n';
+
+const months = Math.round(consentConfig.maxAgeDays / 30);
+---
+<LegalLayout title="Política de cookies" description="Qué tecnologías de almacenamiento y analítica usa greibersalas.com y cómo gestionarlas.">
+  <h2>1. ¿Qué son las cookies?</h2>
+  <p>Las cookies y tecnologías similares (como el almacenamiento local del navegador) permiten guardar o leer información en tu dispositivo. El artículo 22.2 de la LSSI-CE exige informarte y pedir tu consentimiento, salvo para las estrictamente necesarias.</p>
+
+  <h2>2. ¿Qué usa este sitio?</h2>
+  <p><strong>Este sitio no instala cookies propias ni de terceros.</strong> Solo utiliza:</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Nombre</th><th>Tipo</th><th>Finalidad</th><th>Duración</th><th>Consentimiento</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>{consentConfig.storageKey}</code></td>
+          <td>Almacenamiento local (propio)</td>
+          <td>Recordar tu elección de privacidad.</td>
+          <td>{months} meses</td>
+          <td>No requerido (técnica)</td>
+        </tr>
+        <tr>
+          <td>Umami (cloud.umami.is)</td>
+          <td>Analítica sin cookies (terceros)</td>
+          <td>Estadísticas anónimas y agregadas de visitas y clics en botones de contacto.</td>
+          <td>No almacena datos en tu dispositivo</td>
+          <td>Sí — solo se carga si lo aceptas</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>3. Servicios externos enlazados</h2>
+  <p>Los enlaces a LinkedIn y WhatsApp te llevan a servicios de terceros. Al abrirlos se aplican sus propias políticas de privacidad y cookies; este sitio no carga ningún contenido de esos servicios.</p>
+
+  <h2>4. Cómo gestionar tu elección</h2>
+  <p>Puedes aceptar, rechazar o cambiar tu elección en cualquier momento desde <button type="button" class="inline-link" data-cc-open>Configurar cookies</button> (también disponible en el pie de página). Tu elección se renueva cada {months} meses. También puedes borrar el almacenamiento local desde la configuración de tu navegador.</p>
+  <p>Más información sobre el tratamiento de datos en la <a href={routePath('privacy', 'es')}>política de privacidad</a>.</p>
+</LegalLayout>

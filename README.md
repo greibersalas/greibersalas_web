@@ -21,10 +21,14 @@ src/
   pages/index.astro        # Spanish home  (/)
   pages/en/index.astro     # English home  (/en/)
   pages/404.astro          # Bilingual not-found page (noindex)
+  pages/{aviso-legal,privacidad,cookies}.astro, pages/en/{legal-notice,privacy,cookies}.astro  # Legal pages (Spain: LSSI-CE, RGPD)
   pages/sitemap.xml.ts     # Dependency-free sitemap with hreflang alternates
   components/HomePage.astro# Home body shared by both locales
-  components/              # Header, Hero, Services, Stack, Projects, Process, Contact, Footer, Logo
-  i18n/index.ts            # Languages, helpers (getLang, localizedPath, localizedUrl)
+  components/              # Header, Hero, Services, Stack, Projects, About, Process, Contact, ContactForm,
+                           # CookieConsent, WhatsAppFab, Footer, Logo, LegalValue
+  layouts/LegalLayout.astro# Shared layout for legal pages
+  config.ts                # Contact channels, Umami ID, legal identity (NIF/address), consent settings
+  i18n/index.ts            # Languages, translated routes, helpers (getLang, localizedPath, routePath)
   i18n/ui.ts               # UI strings per language (headings, nav, a11y labels, meta)
   data/site.ts             # Content lists per language (services, stack, projects, steps, hero code)
   assets/logo-mark.png     # Brand mark source, optimized to WebP by astro:assets
@@ -33,6 +37,7 @@ src/
 public/
   fonts/                   # Clash Display, Satoshi (Fontshare ITF FFL), JetBrains Mono (OFL)
   .htaccess                # Apache config for IONOS (404, HTTPS/non-www, caching, headers)
+  api/contact.php          # Contact form handler (PHP >= 8.1): validation, honeypot, rate limit, mail()
   robots.txt, favicon.png, og-image.png
 design/logo-original.jpg   # Original logo master (not deployed)
 ```
@@ -54,3 +59,11 @@ The site is fully static. Hosting target: IONOS webspace (Apache).
 2. Upload the **contents** of `dist/` (including the hidden `.htaccess`) to the webspace document root via SFTP.
    Alternatively connect the GitHub repo with IONOS *Deploy Now* (framework: Astro, build command `npm run build`, output `dist`).
 3. After HTTPS is confirmed working, uncomment the `Strict-Transport-Security` header in `public/.htaccess`.
+
+### Before a release
+- `src/config.ts`: `legal.nif` and `legal.address` must be filled (the build warns if they are empty), and `analytics.umamiWebsiteId` set once the Umami Cloud site exists.
+- IONOS panel: PHP >= 8.1 for the webspace; create the mailbox `noreply@greibersalas.com` (sender of the contact form) so mail is relayed and not flagged as spoofed.
+- The contact form only works on the server (Astro dev doesn't run PHP). Test locally with `php -S 127.0.0.1:8099 -t dist` after a build.
+
+### Privacy / consent
+Nothing optional loads before consent. The banner stores the choice in `localStorage` (`gs-consent`, 12 months) and only then injects Umami. Any new third-party script, embed or cookie must be added as a consent category in `CookieConsent.astro` and documented in the cookie policy pages.

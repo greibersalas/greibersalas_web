@@ -29,7 +29,16 @@ Marketing / portfolio site for Greiber Salas (freelance full-stack developer: An
 - **Structure, conventions and deploy steps:** see [`README.md`](README.md).
 - **Contact:** greibersalas@gmail.com · LinkedIn https://www.linkedin.com/in/greibersalas/
 
+## Key files
+- `src/config.ts` — contact channels (email, WhatsApp +34 663 60 72 32, LinkedIn), Umami Website ID, legal identity (NIF/address), consent settings.
+- `public/api/contact.php` — contact form handler on IONOS (PHP >= 8.1). Astro dev doesn't run PHP; test with `php -S` over `dist/`.
+- `src/components/CookieConsent.astro` — consent banner/dialog; the only place optional scripts (Umami) are loaded.
+
 ## Gotchas
 - Astro `<style>` blocks are **scoped** to their component. Shared classes live in `src/styles/global.css` (imported in `Base.astro` frontmatter). Style elements rendered by a child component with `:global()`.
 - `.reveal` elements are only hidden when `html.js` is set; all motion must respect `prefers-reduced-motion`.
 - Hero float cards ("UPTIME 99.9%", "DEPLOY") are intentionally decorative.
+- Nothing optional (analytics, embeds, third-party scripts) may load before consent. New ones need a consent category + an entry in both cookie policy pages.
+- Legal pages are templates written by Claude, not legal advice; any change to data processing (new form fields, new providers) must be reflected in both privacy policy pages.
+- Pages with translated slugs must be registered in `routes` (`src/i18n/index.ts`) so the language switch, hreflang and sitemap pair them.
+- PowerShell 5.1 reads `.ps1` files without BOM as ANSI — build non-ASCII test strings with `[char]` codes.

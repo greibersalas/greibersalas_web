@@ -13,16 +13,19 @@ const links = [
   { id: t.ids.services, label: t.nav.services },
   { id: t.ids.stack, label: t.nav.stack },
   { id: t.ids.projects, label: t.nav.projects },
+  { id: t.ids.about, label: t.nav.about },
   { id: t.ids.process, label: t.nav.process },
 ];
+// Anchors point at the localized home so they also work from other pages (legal pages)
+const anchor = (id: string) => `${homeHref}#${id}`;
 ---
 <header class="site-header" id="hdr">
   <div class="container nav">
     <a href={homeHref} class="brand" aria-label={t.a11y.home}><Logo height={26} alt="" loading="eager" /></a>
     <div class="nav-end">
       <nav class="nav-links" aria-label={t.a11y.mainNav}>
-        {links.map((l) => <a href={`#${l.id}`}>{l.label}</a>)}
-        <a href={`#${t.ids.contact}`} class="btn btn-primary nav-cta">{t.nav.cta} →</a>
+        {links.map((l) => <a href={anchor(l.id)}>{l.label}</a>)}
+        <a href={anchor(t.ids.contact)} class="btn btn-primary nav-cta">{t.nav.cta} →</a>
       </nav>
       <a href={altHref} class="lang-switch mono" hreflang={alt} lang={alt} aria-label={t.a11y.switchLang}>{alt.toUpperCase()}</a>
       <button class="burger" id="burger" type="button" aria-label={t.a11y.openMenu} aria-expanded="false" aria-controls="mobileMenu"
@@ -30,8 +33,8 @@ const links = [
     </div>
   </div>
   <nav class="mobile-menu" id="mobileMenu" aria-label={t.a11y.mobileNav}>
-    {links.map((l) => <a href={`#${l.id}`}>{l.label}</a>)}
-    <a href={`#${t.ids.contact}`}>{t.nav.cta}</a>
+    {links.map((l) => <a href={anchor(l.id)}>{l.label}</a>)}
+    <a href={anchor(t.ids.contact)}>{t.nav.cta}</a>
   </nav>
 </header>
 <style>
@@ -42,7 +45,7 @@ const links = [
   .brand :global(img) { display: block; }
   .brand:hover { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(77,130,255,0.55)); }
   .nav-end { display: flex; align-items: center; gap: 22px; }
-  .nav-links { display: flex; align-items: center; gap: 34px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
   .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-2); transition: color 0.25s; }
   .nav-links a:hover { color: var(--text); }
   .nav-cta { color: #fff !important; padding: 11px 22px; }
@@ -58,7 +61,7 @@ const links = [
   .mobile-menu { display: none; flex-direction: column; padding: 16px 28px; gap: 4px; background: var(--bg-2); border-bottom: 1px solid var(--line); }
   .mobile-menu a { padding: 13px 0; font-weight: 500; color: var(--text-2); border-bottom: 1px solid var(--line); }
   .mobile-menu.open { display: flex; }
-  @media (max-width: 760px) { .nav-links { display: none; } .burger { display: flex; } .nav-end { gap: 10px; } }
+  @media (max-width: 960px) { .nav-links { display: none; } .burger { display: flex; } .nav-end { gap: 10px; } }
 </style>
 <script>
   const hdr = document.getElementById('hdr');

@@ -1,0 +1,53 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import LegalValue from '../../components/LegalValue.astro';
+import { legal } from '../../config';
+import { routePath } from '../../i18n';
+---
+<LegalLayout title="Privacy policy" description="How I process the personal data you share on greibersalas.com.">
+  <p><em>This is a translation provided for convenience. In case of discrepancy, the <a href={routePath('privacy', 'es')} hreflang="es">Spanish version</a> prevails.</em></p>
+  <p>This policy explains how I process the personal data of people who visit this site or contact me, in accordance with Regulation (EU) 2016/679 (GDPR) and Spanish Organic Law 3/2018 (LOPDGDD).</p>
+
+  <h2>1. Data controller</h2>
+  <ul>
+    <li><strong>Controller:</strong> {legal.owner}</li>
+    <li><strong>Tax ID (NIF):</strong> <LegalValue value={legal.nif} /></li>
+    <li><strong>Address:</strong> <LegalValue value={legal.address} /></li>
+    <li><strong>Contact email:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
+  </ul>
+
+  <h2>2. What data I process and why</h2>
+  <h3>Contact form</h3>
+  <p>Name, email, company (optional), project type, estimated budget, timeline and your message. I use them only to answer your inquiry and, if you ask, to prepare a proposal or quote. The form does not store data on the server: it is sent by email to my inbox.</p>
+  <h3>Email and WhatsApp</h3>
+  <p>If you write to me directly, I process the data included in your message for the same purpose. WhatsApp conversations are also processed by WhatsApp Ireland Limited under its own privacy policy.</p>
+  <h3>Web analytics</h3>
+  <p>Only if you accept it in the privacy notice, I use Umami to obtain anonymous, aggregated visit statistics (page views, country, device type and clicks on contact buttons). Umami uses no cookies and stores no data that identifies you. More details in the <a href={routePath('cookies', 'en')}>cookie policy</a>.</p>
+
+  <h2>3. Legal basis</h2>
+  <ul>
+    <li><strong>Consent</strong> (art. 6.1.a GDPR): when you submit the form accepting this policy, and when you allow analytics.</li>
+    <li><strong>Pre-contractual measures</strong> (art. 6.1.b GDPR): when you ask me for information or a quote about a project.</li>
+  </ul>
+  <p>You can withdraw your consent at any time without affecting the lawfulness of prior processing.</p>
+
+  <h2>4. Retention</h2>
+  <p>I keep contact messages for as long as needed to handle your inquiry. If we don't start a professional relationship, I delete them no later than 12 months after the last contact. If an engagement is agreed, data will be kept for the duration of the relationship and the applicable legal periods.</p>
+
+  <h2>5. Recipients and processors</h2>
+  <p>I don't share your data with third parties unless legally required. To provide the service I rely on these providers, acting as data processors:</p>
+  <ul>
+    <li><strong>IONOS SE</strong> (Germany, EU): web hosting and form delivery.</li>
+    <li><strong>Google Ireland Limited</strong> (Gmail): the mailbox where I receive messages. Google may transfer data to the US under the EU-US Data Privacy Framework and standard contractual clauses.</li>
+    <li><strong>Umami Software, Inc.</strong> (Umami Cloud): anonymous web analytics, only if you accept it.</li>
+  </ul>
+
+  <h2>6. Your rights</h2>
+  <p>You can exercise your rights of access, rectification, erasure, objection, restriction of processing and portability by writing to <a href={`mailto:${legal.email}`}>{legal.email}</a>. If you believe your request was not handled properly, you can file a complaint with the Spanish Data Protection Agency (<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>).</p>
+
+  <h2>7. Security</h2>
+  <p>The site is served over an encrypted connection (HTTPS) and I apply reasonable technical and organizational measures to protect your data against unauthorized access, loss or alteration.</p>
+
+  <h2>8. Minors</h2>
+  <p>This site is aimed at professionals and businesses. I do not knowingly process data of children under 14.</p>
+</LegalLayout>

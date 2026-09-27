@@ -1,0 +1,181 @@
+---
+// Project inquiry form. Posts to the PHP handler on IONOS; works without JS (native POST + HTML response)
+// and is enhanced with fetch + inline status when JS is available.
+import { contact, contactEndpoint } from '../config';
+import { getLang, routePath } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].form;
+const privacyHref = routePath('privacy', lang);
+---
+<form class="cform" action={contactEndpoint} method="post" novalidate
+  data-msg-success={t.success} data-msg-sending={t.sending} data-msg-submit={t.submit}
+  data-msg-validation={t.errors.validation} data-msg-rate-limit={t.errors.rate_limit}
+  data-msg-server={t.errors.server} data-msg-network={t.errors.network} data-email={contact.email}>
+  <h3 class="cform-title">{t.title}</h3>
+
+  <input type="hidden" name="lang" value={lang} />
+  <input type="hidden" name="ts" value="" />
+  <!-- Honeypot: hidden from people, tempting for bots -->
+  <div class="hp" aria-hidden="true">
+    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label for="cf-name">{t.name}</label>
+      <input id="cf-name" name="name" type="text" required minlength="2" maxlength="100" autocomplete="name" />
+    </div>
+    <div class="field">
+      <label for="cf-email">{t.email}</label>
+      <input id="cf-email" name="email" type="email" required maxlength="254" autocomplete="email" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="cf-company">{t.company} <span class="opt">{t.optional}</span></label>
+    <input id="cf-company" name="company" type="text" maxlength="120" autocomplete="organization" />
+  </div>
+
+  <div class="row row-3">
+    <div class="field">
+      <label for="cf-type">{t.projectType}</label>
+      <select id="cf-type" name="project_type" required>
+        <option value="">{t.select}</option>
+        {t.projectTypes.map((o) => <option value={o.value}>{o.label}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="cf-budget">{t.budget}</label>
+      <select id="cf-budget" name="budget" required>
+        <option value="">{t.select}</option>
+        {t.budgets.map((o) => <option value={o.value}>{o.label}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="cf-timeline">{t.timeline}</label>
+      <select id="cf-timeline" name="timeline" required>
+        <option value="">{t.select}</option>
+        {t.timelines.map((o) => <option value={o.value}>{o.label}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="cf-message">{t.message}</label>
+    <textarea id="cf-message" name="message" rows="5" required minlength="10" maxlength="5000" placeholder={t.messagePlaceholder}></textarea>
+  </div>
+
+  <div class="check">
+    <input id="cf-privacy" name="privacy" type="checkbox" value="1" required />
+    <label for="cf-privacy">{t.privacyBefore} <a href={privacyHref} target="_blank">{t.privacyLink}</a>{t.privacyAfter}</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary cform-submit">{t.submit}</button>
+  <p class="cform-status" role="status" aria-live="polite"></p>
+</form>
+
+<style>
+  .cform {
+    text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 36px; display: flex; flex-direction: column; gap: 18px;
+  }
+  .cform-title { font-size: 1.35rem; margin-bottom: 4px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .row-3 { grid-template-columns: repeat(3, 1fr); }
+  .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  label { font-size: 0.88rem; font-weight: 500; color: var(--text-2); }
+  .opt { color: var(--text-3); font-weight: 400; }
+  input[type="text"], input[type="email"], select, textarea {
+    width: 100%; font: inherit; font-size: 0.98rem; color: var(--text);
+    background: var(--bg-2); border: 1px solid var(--line-bright); border-radius: 10px; padding: 12px 14px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--text-3) 50%), linear-gradient(135deg, var(--text-3) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+  textarea { resize: vertical; min-height: 130px; }
+  input::placeholder, textarea::placeholder { color: var(--text-3); }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; border-color: var(--gs-blue-bright); box-shadow: 0 0 0 3px rgba(77,130,255,0.25); }
+  [aria-invalid="true"] { border-color: #ff6b81 !important; }
+  .check { display: flex; gap: 10px; align-items: flex-start; }
+  .check input { margin-top: 5px; width: 17px; height: 17px; accent-color: var(--gs-blue); flex-shrink: 0; }
+  .check label { font-weight: 400; }
+  .check a { color: var(--gs-blue-bright); text-decoration: underline; text-underline-offset: 3px; }
+  .cform-submit { align-self: flex-start; border: none; }
+  .cform-submit[disabled] { opacity: 0.6; cursor: progress; transform: none; }
+  .cform-status { font-size: 0.95rem; min-height: 1.5em; }
+  .cform-status.ok { color: #50fa7b; }
+  .cform-status.err { color: #ff6b81; }
+  .cform-status a { color: inherit; text-decoration: underline; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  @media (max-width: 860px) { .row-3 { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } .cform { padding: 26px 20px; } }
+</style>
+
+<script>
+  type Umami = { track: (event: string, data?: Record<string, string>) => void };
+
+  document.querySelectorAll<HTMLFormElement>('form.cform').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.cform-status');
+    const submit = form.querySelector<HTMLButtonElement>('.cform-submit');
+    const ts = form.querySelector<HTMLInputElement>('input[name="ts"]');
+    const msg = form.dataset;
+    if (ts) ts.value = String(Date.now());
+
+    const setStatus = (text: string, kind: 'ok' | 'err' | '', withEmail = false) => {
+      if (!status) return;
+      status.className = `cform-status ${kind}`;
+      status.textContent = text;
+      if (withEmail && msg.email) {
+        const a = document.createElement('a');
+        a.href = `mailto:${msg.email}`;
+        a.textContent = msg.email;
+        status.append(' ', a, '.');
+      }
+    };
+    const markInvalid = (names: string[]) => {
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      names.forEach((n) => form.elements.namedItem(n) instanceof Element && (form.elements.namedItem(n) as Element).setAttribute('aria-invalid', 'true'));
+      const first = names.map((n) => form.elements.namedItem(n)).find((el): el is HTMLElement => el instanceof HTMLElement);
+      first?.focus();
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // Client-side validation using the native constraints
+      const invalid = Array.from(form.elements)
+        .filter((el): el is HTMLInputElement => 'checkValidity' in el && !(el as HTMLInputElement).checkValidity())
+        .map((el) => el.name);
+      if (invalid.length) { markInvalid(invalid); setStatus(msg.msgValidation ?? '', 'err'); return; }
+
+      if (submit) { submit.disabled = true; submit.textContent = msg.msgSending ?? ''; }
+      setStatus('', '');
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        const data = await res.json().catch(() => ({ ok: false, error: 'server' }));
+        if (data.ok) {
+          form.reset();
+          markInvalid([]);
+          setStatus(msg.msgSuccess ?? '', 'ok');
+          (window as unknown as { umami?: Umami }).umami?.track('contact-form-sent');
+        } else if (data.error === 'validation') {
+          markInvalid(data.fields ?? []);
+          setStatus(msg.msgValidation ?? '', 'err');
+        } else if (data.error === 'rate_limit') {
+          setStatus(msg.msgRateLimit ?? '', 'err');
+        } else {
+          setStatus(msg.msgServer ?? '', 'err', true);
+        }
+      } catch {
+        setStatus(msg.msgNetwork ?? '', 'err', true);
+      } finally {
+        if (submit) { submit.disabled = false; submit.textContent = msg.msgSubmit ?? ''; }
+        if (ts) ts.value = String(Date.now() - 60_000); // keep the anti-bot timer valid for retries
+      }
+    });
+
+    // Clear the invalid state as soon as the user edits a field
+    form.addEventListener('input', (e) => (e.target as Element).removeAttribute?.('aria-invalid'));
+  });
+</script>

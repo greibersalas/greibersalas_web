@@ -1,15 +1,32 @@
 ---
+import { getLang, routePath } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].footer;
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
   <div class="container foot">
     <span class="mono brand">&lt;GS/&gt; · greibersalas.com</span>
+    <nav class="foot-links" aria-label={ui[lang].a11y.footerNav}>
+      <a href={routePath('legal', lang)}>{t.legal}</a>
+      <a href={routePath('privacy', lang)}>{t.privacy}</a>
+      <a href={routePath('cookies', lang)}>{t.cookies}</a>
+      <button type="button" class="foot-btn" data-cc-open>{t.cookieSettings}</button>
+    </nav>
     <span class="copy">© {year} Greiber Salas · Software Developer</span>
   </div>
 </footer>
 <style>
-  .site-footer { border-top: 1px solid var(--line); padding: 36px 0; }
-  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.9rem; }
+  .site-footer { border-top: 1px solid var(--line); padding: 36px 0; position: relative; z-index: 1; }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px 24px; font-size: 0.9rem; }
   .foot .brand { color: var(--text); font-weight: 500; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+  .foot-links a, .foot-btn { color: var(--text-2); transition: color 0.25s; }
+  .foot-links a:hover, .foot-btn:hover { color: var(--text); }
+  .foot-btn { font: inherit; background: none; border: none; padding: 0; cursor: pointer; }
   .copy { color: var(--text-3); }
+  /* Leave room for the floating WhatsApp button */
+  @media (max-width: 720px) { .site-footer { padding-bottom: 90px; } }
 </style>

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { defaultLang, langs, pathWithoutLocale, type Lang } from '../i18n';
+import { defaultLang, langFromPath, pathWithoutLocale, routeKeyOf, type Lang } from '../i18n';
 
 // Dependency-free sitemap: lists every static .astro page except 404 and dynamic routes,
 // with hreflang alternates for pages that exist in more than one language.
@@ -13,25 +13,22 @@ const toPath = (file: string) =>
     .replace(/\/index$/, '/')
     .replace(/^(.+[^/])$/, '$1/');
 
-const langOf = (path: string): Lang => {
-  const first = path.split('/')[1];
-  return langs.find((l) => l === first && l !== defaultLang) ?? defaultLang;
-};
+// Pages with translated slugs are grouped by route id, the rest by their locale-less path
+const groupKey = (path: string) => routeKeyOf(path) ?? pathWithoutLocale(path);
 
 export const GET: APIRoute = ({ site }) => {
   const origin = site?.origin ?? 'https://greibersalas.com';
   const paths = pageFiles.map(toPath);
 
-  // Group localized variants by their locale-less path
   const groups = new Map<string, Map<Lang, string>>();
   for (const path of paths) {
-    const key = pathWithoutLocale(path);
+    const key = groupKey(path);
     if (!groups.has(key)) groups.set(key, new Map());
-    groups.get(key)!.set(langOf(path), new URL(path, origin).href);
+    groups.get(key)!.set(langFromPath(path), new URL(path, origin).href);
   }
 
   const urls = paths.map((path) => {
-    const variants = groups.get(pathWithoutLocale(path))!;
+    const variants = groups.get(groupKey(path))!;
     const alternates = variants.size > 1
       ? [...variants].map(([l, href]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${href}"/>`).join('')
         + (variants.has(defaultLang) ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${variants.get(defaultLang)}"/>` : '')

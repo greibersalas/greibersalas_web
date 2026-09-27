@@ -4,6 +4,9 @@ import '../styles/fonts.css';
 import '../styles/global.css';
 import { defaultLang, getLang, langs, localizedUrl, ogLocales } from '../i18n';
 import { ui } from '../i18n/ui';
+import { contact } from '../config';
+import CookieConsent from '../components/CookieConsent.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
 
 interface Props {
   title?: string;
@@ -26,10 +29,11 @@ const jsonLd = {
   name: 'Greiber Salas',
   url: localizedUrl('/', lang),
   image: ogImage,
-  email: 'mailto:greibersalas@gmail.com',
+  email: `mailto:${contact.email}`,
+  telephone: `+${contact.whatsapp.number}`,
   jobTitle: 'Software Developer',
   description,
-  sameAs: ['https://www.linkedin.com/in/greibersalas/'],
+  sameAs: [contact.linkedin],
   knowsAbout: ['Angular', 'NestJS', 'PHP', 'PostgreSQL', 'MySQL', t.meta.knowsArchitecture],
 };
 ---
@@ -66,6 +70,8 @@ const jsonLd = {
 <body>
   <a href="#main" class="skip-link">{t.a11y.skip}</a>
   <slot />
+  <WhatsAppFab />
+  <CookieConsent />
   <script>
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });

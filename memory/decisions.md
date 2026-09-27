@@ -18,3 +18,9 @@ Decisions already taken by the user. Don't re-ask them; append new ones at the b
 | 2026-09-27 | Memory lives in the repo (`CLAUDE.md` + `memory/`), not only in Claude's user folder. |
 | 2026-09-27 | Ship a first deployable build now; roll out improvements incrementally. |
 | 2026-09-27 | First release live on IONOS and approved; `feature/site-upgrade` merged into `main` and pushed. |
+| 2026-09-27 | Phase 1 started. Contact form handled by **PHP on IONOS** (no third-party form service). |
+| 2026-09-27 | Analytics: **Umami Cloud (free Hobby plan)**; loaded **only with analytics consent** from the cookie banner. User must create the account and provide the Website ID. |
+| 2026-09-27 | No Cal.com for now. **WhatsApp: +34 663 60 72 32** (user first wrote "+35", confirmed +34). |
+| 2026-09-27 | "About me" section; photo placeholder is an SVG until a real photo is provided. |
+| 2026-09-27 | Jurisdiction for legal pages: **Spain** (LSSI-CE, RGPD, LOPDGDD). |
+| 2026-09-27 | Cookie consent banner with accept / reject / configure + reopen link in footer (requested by user even though the site sets no cookies by itself). |

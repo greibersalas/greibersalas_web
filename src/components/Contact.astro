@@ -1,30 +1,69 @@
 ---
 import Logo from './Logo.astro';
+import ContactForm from './ContactForm.astro';
+import { contact } from '../config';
 import { getLang } from '../i18n';
 import { ui } from '../i18n/ui';
 
 const lang = getLang(Astro.currentLocale);
 const t = ui[lang].contact;
 const [titleFirst, titleSecond] = t.titleLines;
+const whatsappHref = `https://wa.me/${contact.whatsapp.number}?text=${encodeURIComponent(t.whatsappMessage)}`;
 ---
 <section id={ui[lang].ids.contact} class="cta">
   <div class="cta-glow" aria-hidden="true"></div>
-  <div class="container cta-inner reveal">
-    <div class="brand-big"><Logo height={48} alt="" /></div>
-    <h2>{titleFirst}<br/>{titleSecond}</h2>
-    <p>{t.text}</p>
-    <div class="cta-actions">
-      <a href="mailto:greibersalas@gmail.com" class="btn btn-primary">greibersalas@gmail.com</a>
-      <a href="https://www.linkedin.com/in/greibersalas/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
+  <div class="container">
+    <div class="cta-head reveal">
+      <div class="brand-big"><Logo height={48} alt="" /></div>
+      <h2>{titleFirst}<br/>{titleSecond}</h2>
+      <p>{t.text}</p>
+    </div>
+
+    <div class="cta-grid">
+      <div class="reveal"><ContactForm /></div>
+
+      <aside class="direct reveal" aria-labelledby="direct-title">
+        <h3 id="direct-title">{t.directTitle}</h3>
+        <a href={`mailto:${contact.email}`} class="channel" data-umami-event="contact-email">
+          <span class="ch-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          </span>
+          <span><strong>Email</strong><span class="ch-val">{contact.email}</span></span>
+        </a>
+        <a href={whatsappHref} target="_blank" rel="noopener" class="channel" data-umami-event="contact-whatsapp">
+          <span class="ch-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
+          </span>
+          <span><strong>{t.whatsapp}</strong><span class="ch-val">{contact.whatsapp.display}</span></span>
+        </a>
+        <a href={contact.linkedin} target="_blank" rel="noopener" class="channel" data-umami-event="contact-linkedin">
+          <span class="ch-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4V21H3V9.5Zm7 0h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.2c0-1.2 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4V9.5Z"/></svg>
+          </span>
+          <span><strong>LinkedIn</strong><span class="ch-val">/in/greibersalas</span></span>
+        </a>
+      </aside>
     </div>
   </div>
 </section>
 <style>
-  .cta { position: relative; text-align: center; overflow: hidden; padding: 140px 0; }
-  .cta-glow { position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 50%, rgba(30,91,255,0.18), transparent 65%); }
-  .cta-inner { max-width: 700px; position: relative; }
+  .cta { position: relative; overflow: hidden; padding: 140px 0; }
+  .cta-glow { position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 20%, rgba(30,91,255,0.18), transparent 65%); }
+  .cta-head { max-width: 700px; margin: 0 auto 56px; text-align: center; position: relative; }
   .brand-big { display: flex; justify-content: center; margin-bottom: 28px; filter: drop-shadow(0 0 24px rgba(30,91,255,0.55)); }
   .cta h2 { font-size: clamp(2.4rem, 6vw, 4rem); }
-  .cta p { color: var(--text-2); margin: 20px auto 40px; max-width: 480px; font-size: 1.1rem; }
-  .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-head p { color: var(--text-2); margin: 20px auto 0; max-width: 480px; font-size: 1.1rem; }
+  .cta-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; position: relative; }
+  .direct { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px 28px; display: flex; flex-direction: column; gap: 12px; }
+  .direct h3 { font-size: 1.2rem; margin-bottom: 8px; }
+  .channel {
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--bg-2); transition: 0.3s var(--ease);
+  }
+  .channel:hover { border-color: var(--gs-blue-bright); transform: translateY(-2px); box-shadow: var(--glow); }
+  .ch-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: rgba(30,91,255,0.12); color: var(--gs-blue-bright); flex-shrink: 0; }
+  .channel strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: 0.98rem; }
+  .ch-val { display: block; font-size: 0.85rem; color: var(--text-3); overflow-wrap: anywhere; }
+  @media (max-width: 920px) { .cta-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .cta { padding: 90px 0; } }
 </style>
