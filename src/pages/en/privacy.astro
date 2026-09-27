@@ -1,6 +1,5 @@
 ---
 import LegalLayout from '../../layouts/LegalLayout.astro';
-import LegalValue from '../../components/LegalValue.astro';
 import { legal } from '../../config';
 import { routePath } from '../../i18n';
 ---
@@ -11,8 +10,8 @@ import { routePath } from '../../i18n';
   <h2>1. Data controller</h2>
   <ul>
     <li><strong>Controller:</strong> {legal.owner}</li>
-    <li><strong>Tax ID (NIF):</strong> <LegalValue value={legal.nif} /></li>
-    <li><strong>Address:</strong> <LegalValue value={legal.address} /></li>
+    {legal.nif && <li><strong>Tax ID (NIF):</strong> {legal.nif}</li>}
+    <li><strong>Location:</strong> {legal.location.en}</li>
     <li><strong>Contact email:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
   </ul>
 

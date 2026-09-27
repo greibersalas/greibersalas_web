@@ -135,7 +135,6 @@ const es = {
   legal: {
     updated: 'Última actualización',
     back: '← Volver al inicio',
-    pending: '[pendiente de completar]',
   },
 };
 
@@ -273,7 +272,6 @@ const en: UI = {
   legal: {
     updated: 'Last updated',
     back: '← Back to home',
-    pending: '[to be completed]',
   },
 };
 

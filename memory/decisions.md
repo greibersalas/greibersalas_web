@@ -24,3 +24,6 @@ Decisions already taken by the user. Don't re-ask them; append new ones at the b
 | 2026-09-27 | "About me" section; photo placeholder is an SVG until a real photo is provided. |
 | 2026-09-27 | Jurisdiction for legal pages: **Spain** (LSSI-CE, RGPD, LOPDGDD). |
 | 2026-09-27 | Cookie consent banner with accept / reject / configure + reopen link in footer (requested by user even though the site sets no cookies by itself). |
+| 2026-09-27 | **NIF/DNI and full address are NOT published** (user's choice, informed that LSSI-CE art. 10 asks for them). Legal pages show owner name, location "Barcelona, España" and email. NIF line renders automatically if `legal.nif` is ever set. |
+| 2026-09-27 | Umami Cloud Website ID: `9787fe79-c8e8-42bb-a9f1-7ecd791278d0`. |
+| 2026-09-27 | IONOS webspace runs PHP 8.3; mailbox `noreply@greibersalas.com` created (form sender). |

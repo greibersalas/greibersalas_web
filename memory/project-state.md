@@ -3,7 +3,7 @@
 Living status of greibersalas.com. **Read at session start, update after every work block.** Decisions: [decisions.md](decisions.md).
 
 ## Status (last update 2026-09-27)
-Live site on IONOS = first release (main @ 3b328f3). **Phase 1 implemented on `feature/phase-1`** (committed locally, not pushed/merged, not deployed). Blocked on user input before release: NIF + address, Umami Website ID, IONOS setup (PHP >= 8.1, `noreply@` mailbox), review of About bio and legal texts.
+Live site on IONOS = first release (main @ 3b328f3). **Phase 1 ready to deploy** on `feature/phase-1`: release zip `release/greibersalas-web-2026-09-27-phase1.zip` (42 files, ~289 KB) + `dist/`. Umami ID set, IONOS ready (PHP 8.3, noreply@ mailbox). Waiting for the user to upload and test the real form; then merge into `main` and push (needs OK).
 
 ## Git
 - `main` (pushed): first live release.
@@ -24,12 +24,9 @@ Live site on IONOS = first release (main @ 3b328f3). **Phase 1 implemented on `f
   - Umami click events via `data-umami-event` (contact-email, contact-whatsapp, contact-linkedin, whatsapp-fab) + `contact-form-sent`.
 
 ## Pending
-1. **User input needed before releasing Phase 1:**
-   - `legal.nif` and `legal.address` in `src/config.ts` (LSSI-CE art. 10 requires them).
-   - Create Umami Cloud site → `analytics.umamiWebsiteId`.
-   - IONOS: PHP >= 8.1; create mailbox `noreply@greibersalas.com`.
-   - Review About bio/highlights and legal texts (Claude-written templates: 12-month retention, processors IONOS/Google/Umami).
-2. After release: test the real form on IONOS (spam folder too), confirm HTTPS, then enable HSTS.
+1. User uploads Phase 1 zip; test real form on IONOS (check Gmail spam), consent banner, Umami dashboard receiving visits after accepting.
+2. Then merge `feature/phase-1` → `main` and push (ask for OK). Confirm HTTPS → enable HSTS.
+   - User still to review About bio/highlights and legal texts (Claude-written templates: 12-month retention, processors IONOS/Google/Umami).
 3. Replace SVG portrait with a real photo when available.
 4. Phase 2: case studies, testimonials, FAQ (+ schema), engagement models. Phase 3: blog, lead magnet.
 5. Optional: footer uses text mark `<GS/>` instead of logo image; delete merged branch `feature/site-upgrade`.
@@ -48,3 +45,4 @@ Live site on IONOS = first release (main @ 3b328f3). **Phase 1 implemented on `f
 - 2026-09-27 (5): Contact email → greibersalas@gmail.com; memory moved into repo (`CLAUDE.md`, `memory/`); first deployable build zipped in `release/`.
 - 2026-09-27 (6): User deployed the build to IONOS and approved it. Merged `feature/site-upgrade` into `main`, pushed both branches.
 - 2026-09-27 (7): Phase 1 implemented on `feature/phase-1` (form + PHP, About, WhatsApp, cookie consent, legal pages, Umami wiring). PHP handler tested locally. Waiting for NIF/address, Umami ID, IONOS mailbox, content review.
+- 2026-09-27 (8): User chose not to publish NIF/DNI or full address → legal pages show name + "Barcelona, España" + email (LegalValue removed). Umami ID set (loaded only after consent). Phase 1 release zip built.

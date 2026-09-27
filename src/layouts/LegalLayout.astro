@@ -15,10 +15,6 @@ interface Props {
 const { title, description } = Astro.props;
 const lang = getLang(Astro.currentLocale);
 const t = ui[lang].legal;
-
-if (!legal.nif || !legal.address) {
-  console.warn(`[legal] ${Astro.url.pathname}: legal.nif / legal.address are empty in src/config.ts (required by LSSI-CE art. 10).`);
-}
 ---
 <Base title={`${title} — Greiber Salas`} description={description}>
   <Header />
@@ -47,7 +43,6 @@ if (!legal.nif || !legal.address) {
   .legal :global(ul) { padding-left: 22px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
   .legal :global(a) { color: var(--gs-blue-bright); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
   .legal :global(strong) { color: var(--text); }
-  .legal :global(.pending) { color: #ffb86c; }
   .legal :global(.table-wrap) { overflow-x: auto; margin: 10px 0 20px; }
   .legal :global(table) { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 560px; }
   .legal :global(th), .legal :global(td) { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); color: var(--text-2); vertical-align: top; }

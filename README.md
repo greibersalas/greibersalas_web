@@ -61,7 +61,7 @@ The site is fully static. Hosting target: IONOS webspace (Apache).
 3. After HTTPS is confirmed working, uncomment the `Strict-Transport-Security` header in `public/.htaccess`.
 
 ### Before a release
-- `src/config.ts`: `legal.nif` and `legal.address` must be filled (the build warns if they are empty), and `analytics.umamiWebsiteId` set once the Umami Cloud site exists.
+- `src/config.ts`: legal identity (`legal.*`; NIF is intentionally not published, see `memory/decisions.md`) and `analytics.umamiWebsiteId`.
 - IONOS panel: PHP >= 8.1 for the webspace; create the mailbox `noreply@greibersalas.com` (sender of the contact form) so mail is relayed and not flagged as spoofed.
 - The contact form only works on the server (Astro dev doesn't run PHP). Test locally with `php -S 127.0.0.1:8099 -t dist` after a build.
 

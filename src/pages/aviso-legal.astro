@@ -1,6 +1,5 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
-import LegalValue from '../components/LegalValue.astro';
 import { legal } from '../config';
 import { routePath } from '../i18n';
 ---
@@ -9,8 +8,8 @@ import { routePath } from '../i18n';
   <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa de los datos del titular de este sitio web:</p>
   <ul>
     <li><strong>Titular:</strong> {legal.owner}</li>
-    <li><strong>NIF:</strong> <LegalValue value={legal.nif} /></li>
-    <li><strong>Domicilio:</strong> <LegalValue value={legal.address} /></li>
+    {legal.nif && <li><strong>NIF:</strong> {legal.nif}</li>}
+    <li><strong>Localidad:</strong> {legal.location.es}</li>
     <li><strong>Email:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
     <li><strong>Sitio web:</strong> {legal.domain}</li>
     <li><strong>Actividad:</strong> desarrollo de software a medida y consultoría tecnológica.</li>

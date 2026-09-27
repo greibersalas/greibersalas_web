@@ -1,6 +1,5 @@
 ---
 import LegalLayout from '../../layouts/LegalLayout.astro';
-import LegalValue from '../../components/LegalValue.astro';
 import { legal } from '../../config';
 import { routePath } from '../../i18n';
 ---
@@ -11,8 +10,8 @@ import { routePath } from '../../i18n';
   <p>In accordance with article 10 of Spanish Law 34/2002 on Information Society Services and Electronic Commerce (LSSI-CE), the owner of this website is:</p>
   <ul>
     <li><strong>Owner:</strong> {legal.owner}</li>
-    <li><strong>Tax ID (NIF):</strong> <LegalValue value={legal.nif} /></li>
-    <li><strong>Address:</strong> <LegalValue value={legal.address} /></li>
+    {legal.nif && <li><strong>Tax ID (NIF):</strong> {legal.nif}</li>}
+    <li><strong>Location:</strong> {legal.location.en}</li>
     <li><strong>Email:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
     <li><strong>Website:</strong> {legal.domain}</li>
     <li><strong>Activity:</strong> custom software development and technology consulting.</li>

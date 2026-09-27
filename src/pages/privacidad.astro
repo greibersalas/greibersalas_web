@@ -1,6 +1,5 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
-import LegalValue from '../components/LegalValue.astro';
 import { legal } from '../config';
 import { routePath } from '../i18n';
 ---
@@ -10,8 +9,8 @@ import { routePath } from '../i18n';
   <h2>1. Responsable del tratamiento</h2>
   <ul>
     <li><strong>Responsable:</strong> {legal.owner}</li>
-    <li><strong>NIF:</strong> <LegalValue value={legal.nif} /></li>
-    <li><strong>Domicilio:</strong> <LegalValue value={legal.address} /></li>
+    {legal.nif && <li><strong>NIF:</strong> {legal.nif}</li>}
+    <li><strong>Localidad:</strong> {legal.location.es}</li>
     <li><strong>Email de contacto:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
   </ul>
 

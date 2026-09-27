@@ -15,22 +15,20 @@ export const contact = {
 export const contactEndpoint = '/api/contact.php';
 
 export const analytics = {
-  /**
-   * Umami Cloud website ID. Leave empty to disable analytics entirely.
-   * TODO: set it after creating the site in https://cloud.umami.is
-   */
-  umamiWebsiteId: '',
+  /** Umami Cloud website ID (empty disables analytics entirely). */
+  umamiWebsiteId: '9787fe79-c8e8-42bb-a9f1-7ecd791278d0',
   umamiSrc: 'https://cloud.umami.is/script.js',
 } as const;
 
 /**
  * Legal identity for the legal notice (LSSI-CE art. 10) and privacy policy (RGPD art. 13).
- * TODO: fill `nif` and `address` — both are legally required in Spain for a professional website.
+ * `nif` and a full postal address are intentionally not published (owner's decision, 2026-09-27);
+ * pages only render the NIF line when `nif` is set.
  */
 export const legal = {
   owner: 'Greiber Salas',
   nif: '',
-  address: '',
+  location: { es: 'Barcelona, España', en: 'Barcelona, Spain' },
   email: contact.email,
   domain: 'greibersalas.com',
   /** Date shown as "last updated" on the legal pages (YYYY-MM-DD). */
