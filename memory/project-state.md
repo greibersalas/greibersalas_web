@@ -3,11 +3,12 @@
 Living status of greibersalas.com. **Read at session start, update after every work block.** Decisions: [decisions.md](decisions.md).
 
 ## Status (last update 2026-09-27)
-First deployable build generated for IONOS: `release/greibersalas-web-2026-09-27.zip` (contents of `dist/`, 28 files, ~234 KB; gitignored). Waiting for the user to upload it. Next: **Phase 1 (client acquisition)** once the user provides content/choices.
+**Site is live on IONOS** (build `release/greibersalas-web-2026-09-27.zip`) and approved by the user ("perfecta"). `feature/site-upgrade` merged into `main` and both pushed to GitHub. Next: **Phase 1 (client acquisition)** once the user provides content/choices.
 
 ## Git
-- `main`: 2b5193c — baseline (Astro 4 + audit fixes).
-- `feature/site-upgrade`: Astro 7 upgrade → fonts + logo → i18n + .htaccess → contact email + CLAUDE.md/memory. **Not pushed, not merged** (waiting for user OK).
+- `main` (pushed, tracks `origin/main`): baseline + Astro 7 + fonts/logo + i18n/.htaccess + email/memory (fast-forward merge of `feature/site-upgrade`).
+- `feature/site-upgrade`: pushed to origin; fully merged — can be deleted later.
+- Next work: new branch per feature off `main` (e.g. `feature/phase-1-...`).
 
 ## Done
 - **Audit fixes:** global CSS was scoped to Base (nothing shared applied) → imported in frontmatter; `.sec-title/.sec-sub` global; `.reveal` gated behind `html.js`; LinkedIn URL.
@@ -20,17 +21,15 @@ First deployable build generated for IONOS: `release/greibersalas-web-2026-09-27
 - **Contact email** changed to greibersalas@gmail.com.
 
 ## Pending
-1. User uploads the release zip to IONOS and checks HTTPS; then uncomment HSTS in `public/.htaccess`.
-2. User visual review of the site (es + en, English copy was written by Claude).
-3. Push `main` + `feature/site-upgrade` to GitHub and merge — needs explicit OK.
-4. **Phase 1 — client acquisition** (recommended, not started). Needs from the user:
+1. Confirm HTTPS works on the live domain, then uncomment HSTS in `public/.htaccess` (next deploy).
+2. **Phase 1 — client acquisition** (recommended, not started). Needs from the user:
    - Legal pages (Aviso legal, Privacidad, Cookies — LSSI/RGPD): fiscal data.
    - Contact form with qualifying fields + honeypot: PHP handler on IONOS vs external service (Web3Forms/Formspree).
    - Booking CTA (Cal.com account?), WhatsApp number?
    - About section: photo + short bio.
    - Cookieless analytics: Plausible / Umami / Cloudflare.
-5. Phase 2: case studies, testimonials, FAQ (+ schema), engagement models. Phase 3: blog, lead magnet.
-6. Footer still shows the text mark `<GS/>` (logo image not used there) — optional.
+3. Phase 2: case studies, testimonials, FAQ (+ schema), engagement models. Phase 3: blog, lead magnet.
+4. Footer still shows the text mark `<GS/>` (logo image not used there) — optional.
 
 ## How to produce a deployable build
 `npm run build` → upload the **contents** of `dist/` (incl. hidden `.htaccess`) to the IONOS document root. Zip with `tar -a -c -f release/<name>.zip -C dist .` (forward-slash paths; PowerShell 5.1 `Compress-Archive` uses backslashes).
@@ -41,3 +40,4 @@ First deployable build generated for IONOS: `release/greibersalas-web-2026-09-27
 - 2026-09-27 (3): A11y / perf / SEO / hygiene backlog.
 - 2026-09-27 (4): git + GitHub remote, Astro 7, self-hosted fonts, logo, English version, IONOS .htaccess; Phase 1 recommendations given.
 - 2026-09-27 (5): Contact email → greibersalas@gmail.com; memory moved into repo (`CLAUDE.md`, `memory/`); first deployable build zipped in `release/`.
+- 2026-09-27 (6): User deployed the build to IONOS and approved it. Merged `feature/site-upgrade` into `main`, pushed both branches.

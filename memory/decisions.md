@@ -17,3 +17,4 @@ Decisions already taken by the user. Don't re-ask them; append new ones at the b
 | 2026-09-27 | Contact email: greibersalas@gmail.com (replaces hola@greibersalas.com). |
 | 2026-09-27 | Memory lives in the repo (`CLAUDE.md` + `memory/`), not only in Claude's user folder. |
 | 2026-09-27 | Ship a first deployable build now; roll out improvements incrementally. |
+| 2026-09-27 | First release live on IONOS and approved; `feature/site-upgrade` merged into `main` and pushed. |
