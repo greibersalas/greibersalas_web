@@ -1,0 +1,19 @@
+# Decisions log
+
+Decisions already taken by the user. Don't re-ask them; append new ones at the bottom.
+
+| Date       | Decision |
+| ---------- | -------- |
+| 2026-09-27 | Replies to the user in Spanish; code, docs and memory in English. |
+| 2026-09-27 | Implementation agent `implementer` uses Sonnet 5 with effort high. |
+| 2026-09-27 | LinkedIn: https://www.linkedin.com/in/greibersalas/ |
+| 2026-09-27 | Upgrade Astro to latest major (done: 7.3.5). |
+| 2026-09-27 | Git repo with remote https://github.com/greibersalas/greibersalas_web.git, identity `Greiber Salas <greibersalas@gmail.com>`. |
+| 2026-09-27 | Self-host fonts in the project (done). |
+| 2026-09-27 | `logo.jpg` is the personal brand logo: must be used, optimized for web (done: WebP via astro:assets; master in `design/`). |
+| 2026-09-27 | Hero float cards ("UPTIME 99.9%", "DEPLOY ✓") are decorative — keep them. |
+| 2026-09-27 | Site is bilingual: Spanish (default, `/`) + English (`/en/`). |
+| 2026-09-27 | Hosting: IONOS webspace for now. |
+| 2026-09-27 | Contact email: greibersalas@gmail.com (replaces hola@greibersalas.com). |
+| 2026-09-27 | Memory lives in the repo (`CLAUDE.md` + `memory/`), not only in Claude's user folder. |
+| 2026-09-27 | Ship a first deployable build now; roll out improvements incrementally. |
