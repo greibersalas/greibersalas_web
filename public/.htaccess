@@ -1,0 +1,51 @@
+# Apache config for IONOS webspace. Copied as-is to dist/ by Astro.
+
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+# --- Canonical host: force HTTPS and strip "www." ---
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://greibersalas.com%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# --- MIME types ---
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType application/xml .xml
+</IfModule>
+
+# --- Compression ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+# --- Caching ---
+<IfModule mod_headers.c>
+  # HTML and sitemap: always revalidate so deploys show up immediately
+  <FilesMatch "\.(html|xml|txt)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Fonts, images and favicon (unhashed names): 30 days
+  <FilesMatch "\.(woff2|png|jpe?g|webp|avif|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  # Astro build assets (/_astro/name.<hash>.ext) are content-hashed: cache for a year.
+  # Must come after the rule above so it wins for hashed files.
+  <FilesMatch "\.[A-Za-z0-9_-]{8,}\.(js|css|webp|avif|png|jpe?g|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # --- Security headers ---
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # Enable once HTTPS is confirmed working on the domain:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>

@@ -1,12 +1,18 @@
 ---
 import Logo from './Logo.astro';
+import { getLang } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].contact;
+const [titleFirst, titleSecond] = t.titleLines;
 ---
-<section id="contacto" class="cta">
+<section id={ui[lang].ids.contact} class="cta">
   <div class="cta-glow" aria-hidden="true"></div>
   <div class="container cta-inner reveal">
     <div class="brand-big"><Logo height={48} alt="" /></div>
-    <h2>¿Construimos algo<br/>que dure?</h2>
-    <p>Cuéntame qué tienes en mente. Te respondo con un enfoque claro y honesto sobre cómo abordarlo — sin compromiso.</p>
+    <h2>{titleFirst}<br/>{titleSecond}</h2>
+    <p>{t.text}</p>
     <div class="cta-actions">
       <a href="mailto:hola@greibersalas.com" class="btn btn-primary">hola@greibersalas.com</a>
       <a href="https://www.linkedin.com/in/greibersalas/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>

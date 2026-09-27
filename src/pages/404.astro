@@ -1,16 +1,21 @@
 ---
+// Single bilingual 404 (static hosting serves one error document for every path)
 import Base from '../layouts/Base.astro';
 import Footer from '../components/Footer.astro';
 import Logo from '../components/Logo.astro';
 ---
-<Base title="Página no encontrada — Greiber Salas" description="La página que buscas no existe." noindex>
+<Base title="404 — Greiber Salas" description="Página no encontrada · Page not found" noindex>
   <main id="main" tabindex="-1" class="nf">
     <div class="container nf-inner">
       <a href="/" class="brand-big" aria-label="Greiber Salas — inicio"><Logo height={40} alt="" loading="eager" /></a>
       <p class="nf-code mono">404</p>
       <h1>Esta página no existe</h1>
       <p class="nf-text">Puede que el enlace esté roto o que la página se haya movido.</p>
-      <a href="/" class="btn btn-primary">Volver al inicio →</a>
+      <p class="nf-text nf-en" lang="en">This page doesn't exist. The link may be broken or the page may have moved.</p>
+      <div class="nf-actions">
+        <a href="/" class="btn btn-primary">Volver al inicio →</a>
+        <a href="/en/" class="btn btn-ghost" lang="en" hreflang="en">English home</a>
+      </div>
     </div>
   </main>
   <Footer />
@@ -22,5 +27,7 @@ import Logo from '../components/Logo.astro';
   .brand-big :global(img) { display: block; }
   .nf-code { font-size: 0.9rem; letter-spacing: 0.1em; color: var(--gs-cyan); }
   .nf h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 12px 0 18px; }
-  .nf-text { color: var(--text-2); margin-bottom: 36px; font-size: 1.1rem; }
+  .nf-text { color: var(--text-2); font-size: 1.1rem; }
+  .nf-en { color: var(--text-3); font-size: 0.95rem; margin-top: 8px; }
+  .nf-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
 </style>

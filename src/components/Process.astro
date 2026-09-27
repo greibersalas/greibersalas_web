@@ -1,11 +1,17 @@
 ---
-import { steps } from '../data/site';
+import { getLang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { content } from '../data/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].process;
+const { steps } = content[lang];
 ---
-<section id="proceso" class="proc-sec">
+<section id={ui[lang].ids.process} class="proc-sec">
   <div class="container">
-    <span class="tag-label reveal">Cómo trabajo</span>
-    <h2 class="sec-title reveal">Un proceso que da tranquilidad</h2>
-    <p class="sec-sub reveal">Claridad en cada fase. Sabes en todo momento dónde está tu proyecto y hacia dónde va.</p>
+    <span class="tag-label reveal">{t.tag}</span>
+    <h2 class="sec-title reveal">{t.title}</h2>
+    <p class="sec-sub reveal">{t.sub}</p>
     <div class="steps">
       {steps.map((s) => (
         <div class="step reveal">

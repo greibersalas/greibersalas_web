@@ -1,21 +1,37 @@
 ---
 import Logo from './Logo.astro';
+import { getLang, localizedPath, otherLang } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const alt = otherLang(lang);
+const altHref = localizedPath(Astro.url.pathname, alt);
+const homeHref = localizedPath('/', lang);
+
+const links = [
+  { id: t.ids.services, label: t.nav.services },
+  { id: t.ids.stack, label: t.nav.stack },
+  { id: t.ids.projects, label: t.nav.projects },
+  { id: t.ids.process, label: t.nav.process },
+];
 ---
 <header class="site-header" id="hdr">
   <div class="container nav">
-    <a href="/" class="brand" aria-label="Greiber Salas — inicio"><Logo height={26} alt="" loading="eager" /></a>
-    <nav class="nav-links" aria-label="Principal">
-      <a href="#servicios">Servicios</a>
-      <a href="#stack">Stack</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#proceso">Proceso</a>
-      <a href="#contacto" class="btn btn-primary nav-cta">Hablemos →</a>
-    </nav>
-    <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+    <a href={homeHref} class="brand" aria-label={t.a11y.home}><Logo height={26} alt="" loading="eager" /></a>
+    <div class="nav-end">
+      <nav class="nav-links" aria-label={t.a11y.mainNav}>
+        {links.map((l) => <a href={`#${l.id}`}>{l.label}</a>)}
+        <a href={`#${t.ids.contact}`} class="btn btn-primary nav-cta">{t.nav.cta} →</a>
+      </nav>
+      <a href={altHref} class="lang-switch mono" hreflang={alt} lang={alt} aria-label={t.a11y.switchLang}>{alt.toUpperCase()}</a>
+      <button class="burger" id="burger" type="button" aria-label={t.a11y.openMenu} aria-expanded="false" aria-controls="mobileMenu"
+        data-label-open={t.a11y.openMenu} data-label-close={t.a11y.closeMenu}><span></span><span></span></button>
+    </div>
   </div>
-  <nav class="mobile-menu" id="mobileMenu" aria-label="Principal (móvil)">
-    <a href="#servicios">Servicios</a><a href="#stack">Stack</a>
-    <a href="#proyectos">Proyectos</a><a href="#proceso">Proceso</a><a href="#contacto">Hablemos</a>
+  <nav class="mobile-menu" id="mobileMenu" aria-label={t.a11y.mobileNav}>
+    {links.map((l) => <a href={`#${l.id}`}>{l.label}</a>)}
+    <a href={`#${t.ids.contact}`}>{t.nav.cta}</a>
   </nav>
 </header>
 <style>
@@ -25,10 +41,16 @@ import Logo from './Logo.astro';
   .brand { display: inline-flex; align-items: center; transition: opacity 0.3s, filter 0.3s; }
   .brand :global(img) { display: block; }
   .brand:hover { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(77,130,255,0.55)); }
+  .nav-end { display: flex; align-items: center; gap: 22px; }
   .nav-links { display: flex; align-items: center; gap: 34px; }
   .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-2); transition: color 0.25s; }
   .nav-links a:hover { color: var(--text); }
   .nav-cta { color: #fff !important; padding: 11px 22px; }
+  .lang-switch {
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; color: var(--text-2);
+    padding: 7px 11px; border: 1px solid var(--line-bright); border-radius: 9px; transition: 0.25s var(--ease);
+  }
+  .lang-switch:hover { color: var(--gs-blue-bright); border-color: var(--gs-blue-bright); background: rgba(30,91,255,0.08); }
   .burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
   .burger span { width: 24px; height: 2px; background: var(--text); transition: 0.3s var(--ease); }
   .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
@@ -36,7 +58,7 @@ import Logo from './Logo.astro';
   .mobile-menu { display: none; flex-direction: column; padding: 16px 28px; gap: 4px; background: var(--bg-2); border-bottom: 1px solid var(--line); }
   .mobile-menu a { padding: 13px 0; font-weight: 500; color: var(--text-2); border-bottom: 1px solid var(--line); }
   .mobile-menu.open { display: flex; }
-  @media (max-width: 760px) { .nav-links { display: none; } .burger { display: flex; } }
+  @media (max-width: 760px) { .nav-links { display: none; } .burger { display: flex; } .nav-end { gap: 10px; } }
 </style>
 <script>
   const hdr = document.getElementById('hdr');
@@ -49,7 +71,9 @@ import Logo from './Logo.astro';
   const setOpen = (open: boolean) => {
     menu?.classList.toggle('open', open);
     burger?.setAttribute('aria-expanded', String(open));
-    burger?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    // Localized labels come from data attributes rendered on the server
+    const label = open ? burger?.dataset.labelClose : burger?.dataset.labelOpen;
+    if (label) burger?.setAttribute('aria-label', label);
   };
   const isOpen = () => burger?.getAttribute('aria-expanded') === 'true';
 

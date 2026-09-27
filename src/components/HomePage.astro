@@ -1,0 +1,24 @@
+---
+// Home page body shared by every locale route; components read the language from Astro.currentLocale.
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Services from './Services.astro';
+import Stack from './Stack.astro';
+import Projects from './Projects.astro';
+import Process from './Process.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+---
+<Base>
+  <Header />
+  <main id="main" tabindex="-1">
+    <Hero />
+    <Services />
+    <Stack />
+    <Projects />
+    <Process />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

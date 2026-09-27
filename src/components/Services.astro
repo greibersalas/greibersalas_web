@@ -1,11 +1,17 @@
 ---
-import { services } from '../data/site';
+import { getLang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { content } from '../data/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].services;
+const { services } = content[lang];
 ---
-<section id="servicios">
+<section id={ui[lang].ids.services}>
   <div class="container">
-    <span class="tag-label reveal">Servicios</span>
-    <h2 class="sec-title reveal">Capacidades de extremo a extremo</h2>
-    <p class="sec-sub reveal">Acompaño cada proyecto desde la estrategia técnica hasta el despliegue. Sin intermediarios, sin cabos sueltos.</p>
+    <span class="tag-label reveal">{t.tag}</span>
+    <h2 class="sec-title reveal">{t.title}</h2>
+    <p class="sec-sub reveal">{t.sub}</p>
     <div class="grid">
       {services.map((s) => (
         <article class="card reveal" data-tilt>

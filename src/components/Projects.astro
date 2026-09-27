@@ -1,11 +1,17 @@
 ---
-import { projects } from '../data/site';
+import { getLang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { content } from '../data/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].projects;
+const { projects } = content[lang];
 ---
-<section id="proyectos">
+<section id={ui[lang].ids.projects}>
   <div class="container">
-    <span class="tag-label reveal">Proyectos</span>
-    <h2 class="sec-title reveal">Trabajo seleccionado</h2>
-    <p class="sec-sub reveal">Una muestra de sistemas que he diseñado y construido para resolver problemas concretos de negocio.</p>
+    <span class="tag-label reveal">{t.tag}</span>
+    <h2 class="sec-title reveal">{t.title}</h2>
+    <p class="sec-sub reveal">{t.sub}</p>
     <div class="proj-list">
       {projects.map((p, i) => (
         <article class="proj reveal">
@@ -14,7 +20,7 @@ import { projects } from '../data/site';
             <span class="proj-tag mono">{p.tag}</span>
             <h3>{p.title}</h3>
             <p>{p.desc}</p>
-            <div class="proj-tech">{p.tech.map((t) => <span>{t}</span>)}</div>
+            <div class="proj-tech">{p.tech.map((tech) => <span>{tech}</span>)}</div>
           </div>
           <div class="proj-term mono">
             <span class="term-prompt">$</span> {p.snippet}

@@ -2,6 +2,8 @@
 // Imported in frontmatter so the stylesheet stays global (a <style> block would be scoped to this layout)
 import '../styles/fonts.css';
 import '../styles/global.css';
+import { defaultLang, getLang, langs, localizedUrl, ogLocales } from '../i18n';
+import { ui } from '../i18n/ui';
 
 interface Props {
   title?: string;
@@ -9,11 +11,10 @@ interface Props {
   noindex?: boolean;
 }
 
-const {
-  title = 'Greiber Salas — Ingeniería de Software a Medida',
-  description = 'Desarrollador full-stack senior. Diseño y construyo plataformas SaaS, portales B2B y productos digitales con Angular, NestJS y arquitectura de nivel producción.',
-  noindex = false,
-} = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+
+const { title = t.meta.title, description = t.meta.description, noindex = false } = Astro.props;
 
 const site = Astro.site?.origin ?? 'https://greibersalas.com';
 const canonical = new URL(Astro.url.pathname, site).href;
@@ -23,17 +24,17 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Greiber Salas',
-  url: site,
+  url: localizedUrl('/', lang),
   image: ogImage,
   email: 'mailto:hola@greibersalas.com',
   jobTitle: 'Software Developer',
   description,
   sameAs: ['https://www.linkedin.com/in/greibersalas/'],
-  knowsAbout: ['Angular', 'NestJS', 'PHP', 'PostgreSQL', 'MySQL', 'Arquitectura de software'],
+  knowsAbout: ['Angular', 'NestJS', 'PHP', 'PostgreSQL', 'MySQL', t.meta.knowsArchitecture],
 };
 ---
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,9 +45,12 @@ const jsonLd = {
   <meta name="theme-color" content="#060912" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="canonical" href={canonical} />
+  {!noindex && langs.map((l) => <link rel="alternate" hreflang={l} href={localizedUrl(Astro.url.pathname, l)} />)}
+  {!noindex && <link rel="alternate" hreflang="x-default" href={localizedUrl(Astro.url.pathname, defaultLang)} />}
   <link rel="sitemap" href="/sitemap.xml" />
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale" content={ogLocales[lang]} />
+  {langs.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={ogLocales[l]} />)}
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
@@ -60,7 +64,7 @@ const jsonLd = {
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
-  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <a href="#main" class="skip-link">{t.a11y.skip}</a>
   <slot />
   <script>
     const obs = new IntersectionObserver((entries) => {

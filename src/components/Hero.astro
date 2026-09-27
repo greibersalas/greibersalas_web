@@ -1,30 +1,39 @@
 ---
+import { getLang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { content } from '../data/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].hero;
+const ids = ui[lang].ids;
+const codeLines = content[lang].heroCode;
+// Rendered server-side so the snippet is visible without JS; the script re-types it
+const codeHtml = codeLines.join('\n') + '<span class="cursor">▋</span>';
 ---
 <section class="hero">
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="container hero-inner">
     <div class="hero-left">
-      <span class="tag-label reveal">Disponible para nuevos proyectos</span>
+      <span class="tag-label reveal">{t.tag}</span>
       <h1 class="reveal">
-        Ingeniería de software
-        <span class="hl">que inspira confianza</span>
-        y resuelve negocio.
+        {t.titleStart}
+        <span class="hl">{t.titleHighlight}</span>
+        {t.titleEnd}
       </h1>
       <p class="lead reveal">
-        Soy <strong>Greiber Salas</strong>, desarrollador full-stack. Convierto ideas
-        complejas en plataformas sólidas, rápidas y mantenibles —
-        del primer boceto a producción.
+        {t.leadBefore} <strong>Greiber Salas</strong>{t.leadAfter}
       </p>
       <div class="hero-cta reveal">
-        <a href="#contacto" class="btn btn-primary">Iniciar un proyecto →</a>
-        <a href="#proyectos" class="btn btn-ghost">Ver mi trabajo</a>
+        <a href={`#${ids.contact}`} class="btn btn-primary">{t.ctaPrimary}</a>
+        <a href={`#${ids.projects}`} class="btn btn-ghost">{t.ctaSecondary}</a>
       </div>
       <div class="hero-trust reveal">
-        <div><strong>Full-stack</strong><span>Front · Back · DB</span></div>
-        <div class="sep"></div>
-        <div><strong>B2B & SaaS</strong><span>Producción real</span></div>
-        <div class="sep"></div>
-        <div><strong>End-to-end</strong><span>Scoping a deploy</span></div>
+        {t.trust.map((item, i) => (
+          <Fragment>
+            {i > 0 && <div class="sep"></div>}
+            <div><strong>{item.title}</strong><span>{item.text}</span></div>
+          </Fragment>
+        ))}
       </div>
     </div>
 
@@ -34,11 +43,11 @@
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
           <span class="filename mono">architecture.service.ts</span>
         </div>
-        <pre class="editor-body mono" id="code"></pre>
+        <pre class="editor-body mono" id="code" data-lines={JSON.stringify(codeLines)} set:html={codeHtml}></pre>
       </div>
       <div class="float-card card-a">
         <span class="fc-label mono">DEPLOY</span>
-        <span class="fc-val">✓ producción</span>
+        <span class="fc-val">{t.deployValue}</span>
       </div>
       <div class="float-card card-b">
         <span class="fc-label mono">UPTIME</span>
@@ -108,36 +117,29 @@
 </style>
 
 <script>
-  const lines = [
-    {t:'<span class="cm">// Arquitectura pensada para escalar</span>'},
-    {t:'<span class="kw">export class</span> <span class="ty">PlatformService</span> {'},
-    {t:'  <span class="kw">constructor</span>(<span class="kw">private</span> api: <span class="ty">ApiClient</span>) {}'},
-    {t:''},
-    {t:'  <span class="kw">async</span> <span class="fn">build</span>(idea: <span class="ty">Idea</span>): <span class="ty">Promise</span>&lt;<span class="ty">Producto</span>&gt; {'},
-    {t:'    <span class="kw">const</span> plan = <span class="kw">await</span> <span class="fn">scope</span>(idea);'},
-    {t:'    <span class="kw">return</span> <span class="fn">deploy</span>(plan, { calidad: <span class="str">"producción"</span> });'},
-    {t:'  }'},
-    {t:'}'},
-  ];
+  // The final snippet is already rendered server-side; this only replays it as a typing animation.
   const codeEl = document.getElementById('code');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (codeEl) {
+  if (codeEl?.dataset.lines && !reducedMotion) {
     const el: HTMLElement = codeEl;
-    const finalHtml = lines.map(l=>l.t).join('\n') + '<span class="cursor">▋</span>';
+    const lines: string[] = JSON.parse(codeEl.dataset.lines);
+    const finalHtml = el.innerHTML;
+    const cursor = '<span class="cursor">▋</span>';
+    // Plain text per line (entities decoded), re-escaped while typing
+    const toText = (html: string) => new DOMParser().parseFromString(html, 'text/html').body.textContent ?? '';
+    const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const plain = lines.map(toText);
     let li = 0, ci = 0;
-    const plain = lines.map(l => l.t.replace(/<[^>]+>/g,''));
     const type = () => {
       if (li >= lines.length) { el.innerHTML = finalHtml; return; }
       const full = plain[li];
       if (ci <= full.length) {
-        const done = lines.slice(0, li).map(l=>l.t).join('\n');
-        const cur = full.slice(0, ci);
-        el.innerHTML = (done ? done + '\n' : '') + cur + '<span class="cursor">▋</span>';
+        const done = lines.slice(0, li).join('\n');
+        el.innerHTML = (done ? done + '\n' : '') + escape(full.slice(0, ci)) + cursor;
         ci++; setTimeout(type, full ? 22 : 0);
       } else { li++; ci = 0; setTimeout(type, 90); }
     };
-    // Skip the typing animation for users who prefer reduced motion
-    if (reducedMotion) el.innerHTML = finalHtml;
-    else setTimeout(type, 600);
+    el.innerHTML = cursor;
+    setTimeout(type, 600);
   }
 </script>

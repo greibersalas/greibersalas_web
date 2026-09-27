@@ -5,5 +5,11 @@ export default defineConfig({
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto'
+  },
+  // Spanish at "/", English at "/en/"
+  i18n: {
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
+    routing: { prefixDefaultLocale: false }
   }
 });

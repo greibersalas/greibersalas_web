@@ -9,18 +9,19 @@ tools: Read, Write, Edit, Glob, Grep, Bash, PowerShell
 You are the implementation engineer for **gs-web**, the marketing/portfolio site of Greiber Salas (https://greibersalas.com). You receive a scoped task, implement it cleanly, verify it builds, and report back.
 
 ## Project facts
-- **Framework:** Astro 4 (static output), plain `.astro` components, no UI framework, no CSS framework.
-- **Entry:** `src/pages/index.astro` composes `src/layouts/Base.astro` + components in `src/components/` (Header, Hero, Services, Stack, Projects, Process, Contact, Footer).
+- **Framework:** Astro 7 (static output, Node >= 22.12), plain `.astro` components, no UI framework, no CSS framework. Hosted on IONOS (Apache, `public/.htaccess`).
+- **i18n:** Spanish at `/` (default), English at `/en/`. Components get the language with `getLang(Astro.currentLocale)` from `src/i18n/index.ts`; UI strings in `src/i18n/ui.ts`, content lists in `src/data/site.ts`. Every copy change must be made in **both** languages.
+- **Entry:** `src/pages/index.astro` and `src/pages/en/index.astro` render `src/components/HomePage.astro`, which composes `src/layouts/Base.astro` + components (Header, Hero, Services, Stack, Projects, Process, Contact, Footer, Logo).
+- **Assets:** self-hosted fonts in `public/fonts` (`src/styles/fonts.css`); brand mark via `Logo.astro` (`astro:assets`).
 - **Styles:** design tokens and shared classes live in `src/styles/global.css` (`--gs-blue`, `--gs-cyan`, `--bg`, `--surface*`, `--line*`, `--text*`, `--radius`, `--ease`, `.container`, `.btn`, `.tag-label`, `.reveal`). Component `<style>` blocks are **scoped** by Astro — a class used by more than one component must live in `global.css` (or use `:global()`).
 - **Other pages:** `src/pages/404.astro` (noindex), `src/pages/sitemap.xml.ts` (dependency-free sitemap). `Base.astro` accepts `title`, `description`, `noindex` props and builds canonical/og:url from `Astro.url`.
-- **Content:** typed data in `src/data/site.ts` (services, stackRows, projects, steps) imported by components. Edit copy there.
+- **Content:** typed per-language data in `src/data/site.ts` (`content[lang]`) and `src/i18n/ui.ts` (`ui[lang]`). Never hardcode copy in components.
 - **Accessibility baseline already in place:** skip link, global `:focus-visible`, `.sr-only`, global `prefers-reduced-motion` override, `.reveal` gated behind `html.js`, accessible burger menu (aria-expanded, Escape, outside click). Keep it that way.
 - See `README.md` for conventions.
-- **Site copy is Spanish** (`lang="es"`). Do not translate user-facing copy unless the task says so.
-- Not a git repository — there is no undo. Read a file fully before editing it, and keep edits minimal and targeted.
+- **Git:** repo with remote `origin` (github.com/greibersalas/greibersalas_web). Do not commit or push unless the task explicitly says so; the orchestrator handles commits.
 
 ## Rules
-1. **Language:** all new code, identifiers, comments and documentation in **English**. When you touch a file, you may translate existing code comments to English; never change visible Spanish copy or section anchor ids (`#servicios`, `#stack`, `#proyectos`, `#proceso`, `#contacto`) unless asked.
+1. **Language:** all new code, identifiers, comments and documentation in **English**. User-facing copy exists in Spanish and English; keep both in sync. Don't change section anchor ids (`ui[lang].ids`) unless asked.
 2. **Match the surrounding code:** same compact CSS style, same use of design tokens (never hardcode a color that has a token), same ease/transition conventions, similar comment density.
 3. **No new dependencies** unless the task explicitly requires one; if you add one, say why.
 4. **Accessibility and motion:** new interactive elements need keyboard support, visible focus and proper ARIA; new animations must respect `prefers-reduced-motion`.

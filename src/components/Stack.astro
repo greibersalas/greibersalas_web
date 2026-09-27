@@ -1,11 +1,17 @@
 ---
-import { stackRows } from '../data/site';
+import { getLang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { content } from '../data/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang].stack;
+const { stackRows } = content[lang];
 ---
-<section id="stack" class="stack-sec">
+<section id={ui[lang].ids.stack} class="stack-sec">
   <div class="container head">
-    <span class="tag-label reveal">Stack tecnológico</span>
-    <h2 class="sec-title reveal">Herramientas probadas en producción</h2>
-    <p class="sec-sub reveal">Elijo cada tecnología según el problema, no por moda. Una base moderna, tipada y mantenible.</p>
+    <span class="tag-label reveal">{t.tag}</span>
+    <h2 class="sec-title reveal">{t.title}</h2>
+    <p class="sec-sub reveal">{t.sub}</p>
   </div>
   {stackRows.map((row, i) => (
     <div class="marquee">
