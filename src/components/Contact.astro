@@ -1,9 +1,10 @@
 ---
+import Logo from './Logo.astro';
 ---
 <section id="contacto" class="cta">
   <div class="cta-glow" aria-hidden="true"></div>
   <div class="container cta-inner reveal">
-    <span class="brand-big mono">&lt;GS/&gt;</span>
+    <div class="brand-big"><Logo height={48} alt="" /></div>
     <h2>¿Construimos algo<br/>que dure?</h2>
     <p>Cuéntame qué tienes en mente. Te respondo con un enfoque claro y honesto sobre cómo abordarlo — sin compromiso.</p>
     <div class="cta-actions">
@@ -16,7 +17,7 @@
   .cta { position: relative; text-align: center; overflow: hidden; padding: 140px 0; }
   .cta-glow { position: absolute; inset: 0; background: radial-gradient(700px 400px at 50% 50%, rgba(30,91,255,0.18), transparent 65%); }
   .cta-inner { max-width: 700px; position: relative; }
-  .brand-big { display: block; font-size: 2.6rem; font-weight: 700; color: var(--gs-blue-bright); margin-bottom: 24px; }
+  .brand-big { display: flex; justify-content: center; margin-bottom: 28px; filter: drop-shadow(0 0 24px rgba(30,91,255,0.55)); }
   .cta h2 { font-size: clamp(2.4rem, 6vw, 4rem); }
   .cta p { color: var(--text-2); margin: 20px auto 40px; max-width: 480px; font-size: 1.1rem; }
   .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }

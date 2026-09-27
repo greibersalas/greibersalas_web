@@ -1,0 +1,17 @@
+---
+// Brand mark (<GS>), white on transparent. Source: src/assets/logo-mark.png (generated from design/logo-original.jpg).
+// Astro optimizes it to WebP at 1x/2x with intrinsic width/height to avoid layout shift.
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-mark.png';
+
+interface Props {
+  height?: number;
+  alt?: string;
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const { height = 28, alt = 'Greiber Salas', loading = 'lazy', class: className } = Astro.props;
+const width = Math.round((height * logo.width) / logo.height);
+---
+<Image src={logo} alt={alt} width={width} height={height} densities={[1, 2]} loading={loading} class={className} />

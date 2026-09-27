@@ -1,8 +1,9 @@
 ---
+import Logo from './Logo.astro';
 ---
 <header class="site-header" id="hdr">
   <div class="container nav">
-    <a href="/" class="brand mono" aria-label="Greiber Salas — inicio">&lt;GS/&gt;</a>
+    <a href="/" class="brand" aria-label="Greiber Salas — inicio"><Logo height={26} alt="" loading="eager" /></a>
     <nav class="nav-links" aria-label="Principal">
       <a href="#servicios">Servicios</a>
       <a href="#stack">Stack</a>
@@ -21,8 +22,9 @@
   .site-header { position: sticky; top: 0; z-index: 50; transition: all 0.4s var(--ease); border-bottom: 1px solid transparent; }
   .site-header.scrolled { background: rgba(6,9,18,0.72); backdrop-filter: blur(16px) saturate(160%); border-bottom-color: var(--line); }
   .nav { display: flex; align-items: center; justify-content: space-between; height: 76px; }
-  .brand { font-size: 1.4rem; font-weight: 700; color: var(--text); letter-spacing: -0.03em; transition: color 0.3s; }
-  .brand:hover { color: var(--gs-blue-bright); }
+  .brand { display: inline-flex; align-items: center; transition: opacity 0.3s, filter 0.3s; }
+  .brand :global(img) { display: block; }
+  .brand:hover { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(77,130,255,0.55)); }
   .nav-links { display: flex; align-items: center; gap: 34px; }
   .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-2); transition: color 0.25s; }
   .nav-links a:hover { color: var(--text); }
