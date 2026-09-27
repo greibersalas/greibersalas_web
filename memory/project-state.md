@@ -2,11 +2,22 @@
 
 Living status of greibersalas.com. **Read at session start, update after every work block.** Decisions: [decisions.md](decisions.md).
 
+## ▶ Next session — start here (written 2026-09-27, end of day)
+1. Greet the user in Spanish with a short summary: site live with Phase 1 (form, About, WhatsApp, cookie consent, legal pages, Umami).
+2. Ask first: push the end-of-day commit (`main` is 1 commit ahead of `origin/main`; the user already pushed Phase 1 up to b92c065 themselves) and whether to delete merged branches `feature/site-upgrade` (also on origin) and `feature/phase-1` (local).
+3. Then propose the next work, in this order:
+   - Quick win: enable HSTS in `public/.htaccess` (HTTPS confirmed working) — ship with the next deploy.
+   - User review pending: About bio/highlights and legal texts (Claude-written).
+   - Real photo for About (replace SVG placeholder in `About.astro`).
+   - **Phase 2:** case-study pages (problem → solution → results; needs real content/metrics from user), testimonials (real only), FAQ + FAQPage schema, engagement models (fixed project / monthly retainer / consulting).
+4. The `implementer` agent (`.claude/agents/implementer.md`, Sonnet 5 high) should now be loadable — use it for scoped implementation tasks.
+5. Work on a new branch off `main` (e.g. `feature/phase-2`).
+
 ## Status (last update 2026-09-27)
 **Phase 1 is LIVE on IONOS** (release `release/greibersalas-web-2026-09-27-phase1.zip`) and verified by the user: contact form delivers mail, consent banner + Umami, WhatsApp, legal pages all work. `feature/phase-1` merged into `main` (local). Next: Phase 2 when the user is ready.
 
 ## Git
-- `main`: Phase 1 live release (fast-forward merge of `feature/phase-1`). **Not pushed yet** — needs OK.
+- `main`: Phase 1 live release. `origin/main` = b92c065 (pushed by the user); only the end-of-day memory commit is local.
 - `feature/site-upgrade`: pushed, fully merged — can be deleted.
 - `feature/phase-1`: fully merged, local only — can be deleted.
 
@@ -24,7 +35,7 @@ Living status of greibersalas.com. **Read at session start, update after every w
   - Umami click events via `data-umami-event` (contact-email, contact-whatsapp, contact-linkedin, whatsapp-fab) + `contact-form-sent`.
 
 ## Pending
-1. Push `main` to GitHub (asked 2026-09-27). Optionally delete merged branches.
+1. Push the local end-of-day commit (needs OK). Optionally delete merged branches.
 2. Enable HSTS in `public/.htaccess` (HTTPS works on the live site) in the next deploy.
 3. User still to review About bio/highlights and legal texts (Claude-written templates: 12-month retention, processors IONOS/Google/Umami).
 4. Replace SVG portrait with a real photo when available.
@@ -47,3 +58,4 @@ Living status of greibersalas.com. **Read at session start, update after every w
 - 2026-09-27 (7): Phase 1 implemented on `feature/phase-1` (form + PHP, About, WhatsApp, cookie consent, legal pages, Umami wiring). PHP handler tested locally. Waiting for NIF/address, Umami ID, IONOS mailbox, content review.
 - 2026-09-27 (8): User chose not to publish NIF/DNI or full address → legal pages show name + "Barcelona, España" + email (LegalValue removed). Umami ID set (loaded only after consent). Phase 1 release zip built.
 - 2026-09-27 (9): User deployed Phase 1 and confirmed everything works. Merged `feature/phase-1` into `main` (fast-forward).
+- 2026-09-27 (10): End of day. State saved with a 'Next session' block. User had already pushed `main` to b92c065; only this commit is local.
