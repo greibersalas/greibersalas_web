@@ -1,0 +1,44 @@
+---
+import { projects } from '../data/site';
+---
+<section id="proyectos">
+  <div class="container">
+    <span class="tag-label reveal">Proyectos</span>
+    <h2 class="sec-title reveal">Trabajo seleccionado</h2>
+    <p class="sec-sub reveal">Una muestra de sistemas que he diseñado y construido para resolver problemas concretos de negocio.</p>
+    <div class="proj-list">
+      {projects.map((p, i) => (
+        <article class="proj reveal">
+          <span class="proj-num mono">0{i+1}</span>
+          <div class="proj-main">
+            <span class="proj-tag mono">{p.tag}</span>
+            <h3>{p.title}</h3>
+            <p>{p.desc}</p>
+            <div class="proj-tech">{p.tech.map((t) => <span>{t}</span>)}</div>
+          </div>
+          <div class="proj-term mono">
+            <span class="term-prompt">$</span> {p.snippet}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .proj-list { display: flex; flex-direction: column; gap: 20px; }
+  .proj {
+    display: grid; grid-template-columns: auto 1fr 280px; gap: 36px; align-items: center;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 38px 40px; transition: 0.4s var(--ease);
+  }
+  .proj:hover { border-color: var(--line-bright); transform: translateY(-4px); box-shadow: 0 24px 60px -30px rgba(0,0,0,0.7); }
+  .proj-num { font-size: 2.4rem; font-weight: 700; color: var(--surface-2); -webkit-text-stroke: 1px var(--line-bright); }
+  .proj-tag { font-size: 0.78rem; color: var(--gs-blue-bright); letter-spacing: 0.04em; }
+  .proj-main h3 { font-size: 1.45rem; margin: 8px 0 10px; }
+  .proj-main p { color: var(--text-2); font-size: 0.98rem; max-width: 540px; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .proj-tech span { font-family: var(--font-mono); font-size: 0.72rem; padding: 5px 11px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 7px; color: var(--text-3); }
+  .proj-term { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; font-size: 0.8rem; color: var(--gs-cyan); }
+  .term-prompt { color: var(--text-3); margin-right: 8px; }
+  @media (max-width: 920px) { .proj { grid-template-columns: 1fr; gap: 18px; padding: 30px; } .proj-num { font-size: 1.8rem; } }
+</style>

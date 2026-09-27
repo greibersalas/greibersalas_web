@@ -1,0 +1,15 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container foot">
+    <span class="mono brand">&lt;GS/&gt; · greibersalas.com</span>
+    <span class="copy">© {year} Greiber Salas · Software Developer</span>
+  </div>
+</footer>
+<style>
+  .site-footer { border-top: 1px solid var(--line); padding: 36px 0; }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.9rem; }
+  .foot .brand { color: var(--text); font-weight: 500; }
+  .copy { color: var(--text-3); }
+</style>

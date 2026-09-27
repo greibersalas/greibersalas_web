@@ -1,0 +1,62 @@
+---
+---
+<header class="site-header" id="hdr">
+  <div class="container nav">
+    <a href="/" class="brand mono" aria-label="Greiber Salas — inicio">&lt;GS/&gt;</a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#stack">Stack</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#contacto" class="btn btn-primary nav-cta">Hablemos →</a>
+    </nav>
+    <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Principal (móvil)">
+    <a href="#servicios">Servicios</a><a href="#stack">Stack</a>
+    <a href="#proyectos">Proyectos</a><a href="#proceso">Proceso</a><a href="#contacto">Hablemos</a>
+  </nav>
+</header>
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; transition: all 0.4s var(--ease); border-bottom: 1px solid transparent; }
+  .site-header.scrolled { background: rgba(6,9,18,0.72); backdrop-filter: blur(16px) saturate(160%); border-bottom-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .brand { font-size: 1.4rem; font-weight: 700; color: var(--text); letter-spacing: -0.03em; transition: color 0.3s; }
+  .brand:hover { color: var(--gs-blue-bright); }
+  .nav-links { display: flex; align-items: center; gap: 34px; }
+  .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-2); transition: color 0.25s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { color: #fff !important; padding: 11px 22px; }
+  .burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+  .burger span { width: 24px; height: 2px; background: var(--text); transition: 0.3s var(--ease); }
+  .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+  .burger[aria-expanded="true"] span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+  .mobile-menu { display: none; flex-direction: column; padding: 16px 28px; gap: 4px; background: var(--bg-2); border-bottom: 1px solid var(--line); }
+  .mobile-menu a { padding: 13px 0; font-weight: 500; color: var(--text-2); border-bottom: 1px solid var(--line); }
+  .mobile-menu.open { display: flex; }
+  @media (max-width: 760px) { .nav-links { display: none; } .burger { display: flex; } }
+</style>
+<script>
+  const hdr = document.getElementById('hdr');
+  const onScroll = () => hdr?.classList.toggle('scrolled', window.scrollY > 20);
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobileMenu');
+
+  const setOpen = (open: boolean) => {
+    menu?.classList.toggle('open', open);
+    burger?.setAttribute('aria-expanded', String(open));
+    burger?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  };
+  const isOpen = () => burger?.getAttribute('aria-expanded') === 'true';
+
+  burger?.addEventListener('click', () => setOpen(!isOpen()));
+  menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) { setOpen(false); burger?.focus(); }
+  });
+  document.addEventListener('click', (e) => {
+    if (isOpen() && hdr && !hdr.contains(e.target as Node)) setOpen(false);
+  });
+</script>

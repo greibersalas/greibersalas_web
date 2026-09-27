@@ -1,0 +1,31 @@
+---
+import { steps } from '../data/site';
+---
+<section id="proceso" class="proc-sec">
+  <div class="container">
+    <span class="tag-label reveal">Cómo trabajo</span>
+    <h2 class="sec-title reveal">Un proceso que da tranquilidad</h2>
+    <p class="sec-sub reveal">Claridad en cada fase. Sabes en todo momento dónde está tu proyecto y hacia dónde va.</p>
+    <div class="steps">
+      {steps.map((s) => (
+        <div class="step reveal">
+          <span class="step-n mono">{s.n}</span>
+          <div class="step-line"></div>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .proc-sec { background: radial-gradient(900px 500px at 50% 0%, rgba(30,91,255,0.07), transparent 70%); }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .step { position: relative; padding-top: 24px; }
+  .step-n { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--gs-blue-bright); }
+  .step-line { height: 2px; background: linear-gradient(90deg, var(--gs-blue), transparent); margin: 16px 0 20px; border-radius: 2px; }
+  .step h3 { font-size: 1.25rem; margin-bottom: 10px; }
+  .step p { color: var(--text-2); font-size: 0.95rem; }
+  @media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; gap: 32px 24px; } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+</style>

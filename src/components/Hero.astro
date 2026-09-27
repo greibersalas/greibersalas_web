@@ -1,0 +1,143 @@
+---
+---
+<section class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container hero-inner">
+    <div class="hero-left">
+      <span class="tag-label reveal">Disponible para nuevos proyectos</span>
+      <h1 class="reveal">
+        Ingeniería de software
+        <span class="hl">que inspira confianza</span>
+        y resuelve negocio.
+      </h1>
+      <p class="lead reveal">
+        Soy <strong>Greiber Salas</strong>, desarrollador full-stack. Convierto ideas
+        complejas en plataformas sólidas, rápidas y mantenibles —
+        del primer boceto a producción.
+      </p>
+      <div class="hero-cta reveal">
+        <a href="#contacto" class="btn btn-primary">Iniciar un proyecto →</a>
+        <a href="#proyectos" class="btn btn-ghost">Ver mi trabajo</a>
+      </div>
+      <div class="hero-trust reveal">
+        <div><strong>Full-stack</strong><span>Front · Back · DB</span></div>
+        <div class="sep"></div>
+        <div><strong>B2B & SaaS</strong><span>Producción real</span></div>
+        <div class="sep"></div>
+        <div><strong>End-to-end</strong><span>Scoping a deploy</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right reveal" aria-hidden="true">
+      <div class="editor">
+        <div class="editor-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="filename mono">architecture.service.ts</span>
+        </div>
+        <pre class="editor-body mono" id="code"></pre>
+      </div>
+      <div class="float-card card-a">
+        <span class="fc-label mono">DEPLOY</span>
+        <span class="fc-val">✓ producción</span>
+      </div>
+      <div class="float-card card-b">
+        <span class="fc-label mono">UPTIME</span>
+        <span class="fc-val">99.9%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding: 130px 0 110px; overflow: clip; }
+  .hero-right { isolation: isolate; }
+  .card-a { top: -24px; right: 6px; }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 70% at 60% 0%, #000 0%, transparent 70%);
+  }
+  .hero-inner { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+  .hero h1 { font-size: clamp(2.5rem, 5.2vw, 4.4rem); margin: 22px 0 24px; }
+  .hl { background: linear-gradient(120deg, var(--gs-blue-bright), var(--gs-cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline; }
+  .lead { font-size: 1.2rem; color: var(--text-2); max-width: 520px; }
+  .lead strong { color: var(--text); }
+  .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin: 38px 0 44px; }
+  .hero-trust { display: flex; align-items: center; gap: 24px; padding-top: 30px; border-top: 1px solid var(--line); }
+  .hero-trust strong { display: block; font-family: var(--font-display); font-size: 1rem; color: var(--text); }
+  .hero-trust span { font-size: 0.85rem; color: var(--text-3); }
+  .hero-trust .sep { width: 1px; height: 34px; background: var(--line); }
+
+  /* Code editor */
+  .hero-right { position: relative; }
+  .editor {
+    background: linear-gradient(180deg, var(--surface), var(--bg-2));
+    border: 1px solid var(--line-bright); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(30,91,255,0.12);
+    backdrop-filter: blur(10px);
+  }
+  .editor-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--line); }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+  .filename { margin-left: 12px; font-size: 0.8rem; color: var(--text-3); }
+  .editor-body { padding: 22px; font-size: 0.86rem; line-height: 1.75; min-height: 320px; white-space: pre-wrap; color: var(--text-2); }
+  .editor-body .kw { color: #ff79c6; } .editor-body .fn { color: #50fa7b; }
+  .editor-body .str { color: var(--gs-cyan); } .editor-body .cm { color: var(--text-3); font-style: italic; }
+  .editor-body .ty { color: #ffb86c; } .editor-body .cursor { color: var(--gs-cyan); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .float-card {
+    position: absolute; display: flex; flex-direction: column; gap: 3px;
+    background: rgba(14,20,38,0.85); backdrop-filter: blur(14px);
+    border: 1px solid var(--line-bright); border-radius: 14px; padding: 14px 18px;
+    box-shadow: 0 16px 40px -16px rgba(0,0,0,0.7); animation: floaty 5s ease-in-out infinite;
+  }
+  .card-b { bottom: -22px; left: -10px; animation-delay: 1.5s; }
+  .fc-label { font-size: 0.66rem; letter-spacing: 0.08em; color: var(--text-3); }
+  .fc-val { font-family: var(--font-display); font-weight: 600; color: var(--gs-cyan); font-size: 1rem; }
+  @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+  .reveal:nth-child(1){transition-delay:.05s}.reveal:nth-child(2){transition-delay:.12s}.reveal:nth-child(3){transition-delay:.19s}.reveal:nth-child(4){transition-delay:.26s}.reveal:nth-child(5){transition-delay:.33s}
+
+  @media (max-width: 920px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 60px; }
+    .hero-right { max-width: 520px; }
+    .float-card { display: none; }
+  }
+</style>
+
+<script>
+  const lines = [
+    {t:'<span class="cm">// Arquitectura pensada para escalar</span>'},
+    {t:'<span class="kw">export class</span> <span class="ty">PlatformService</span> {'},
+    {t:'  <span class="kw">constructor</span>(<span class="kw">private</span> api: <span class="ty">ApiClient</span>) {}'},
+    {t:''},
+    {t:'  <span class="kw">async</span> <span class="fn">build</span>(idea: <span class="ty">Idea</span>): <span class="ty">Promise</span>&lt;<span class="ty">Producto</span>&gt; {'},
+    {t:'    <span class="kw">const</span> plan = <span class="kw">await</span> <span class="fn">scope</span>(idea);'},
+    {t:'    <span class="kw">return</span> <span class="fn">deploy</span>(plan, { calidad: <span class="str">"producción"</span> });'},
+    {t:'  }'},
+    {t:'}'},
+  ];
+  const codeEl = document.getElementById('code');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (codeEl) {
+    const el: HTMLElement = codeEl;
+    const finalHtml = lines.map(l=>l.t).join('\n') + '<span class="cursor">▋</span>';
+    let li = 0, ci = 0;
+    const plain = lines.map(l => l.t.replace(/<[^>]+>/g,''));
+    const type = () => {
+      if (li >= lines.length) { el.innerHTML = finalHtml; return; }
+      const full = plain[li];
+      if (ci <= full.length) {
+        const done = lines.slice(0, li).map(l=>l.t).join('\n');
+        const cur = full.slice(0, ci);
+        el.innerHTML = (done ? done + '\n' : '') + cur + '<span class="cursor">▋</span>';
+        ci++; setTimeout(type, full ? 22 : 0);
+      } else { li++; ci = 0; setTimeout(type, 90); }
+    };
+    // Skip the typing animation for users who prefer reduced motion
+    if (reducedMotion) el.innerHTML = finalHtml;
+    else setTimeout(type, 600);
+  }
+</script>

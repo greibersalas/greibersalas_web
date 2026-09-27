@@ -1,0 +1,43 @@
+---
+import { stackRows } from '../data/site';
+---
+<section id="stack" class="stack-sec">
+  <div class="container head">
+    <span class="tag-label reveal">Stack tecnológico</span>
+    <h2 class="sec-title reveal">Herramientas probadas en producción</h2>
+    <p class="sec-sub reveal">Elijo cada tecnología según el problema, no por moda. Una base moderna, tipada y mantenible.</p>
+  </div>
+  {stackRows.map((row, i) => (
+    <div class="marquee">
+      <ul class:list={['track', { rev: i % 2 === 1 }]}>
+        {row.map((t) => <li class="pill mono">{t}</li>)}
+        {/* Duplicate set for the seamless loop, hidden from assistive tech */}
+        {row.map((t) => <li class="pill mono dup" aria-hidden="true">{t}</li>)}
+      </ul>
+    </div>
+  ))}
+</section>
+<style>
+  .stack-sec { background: linear-gradient(180deg, transparent, rgba(10,15,30,0.6), transparent); overflow: hidden; }
+  .head { text-align: center; margin-bottom: 56px; }
+  .head .tag-label { justify-content: center; }
+  .head .sec-title { margin-left: auto; margin-right: auto; }
+  .head .sec-sub { margin: 14px auto 0; }
+  .marquee { display: flex; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); margin: 12px 0; }
+  .track { display: flex; gap: 16px; padding-right: 16px; list-style: none; animation: scroll 32s linear infinite; }
+  .track.rev { animation-direction: reverse; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .pill {
+    flex-shrink: 0; padding: 16px 28px; font-size: 1.05rem; font-weight: 500; color: var(--text-2);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px; transition: 0.3s var(--ease);
+  }
+  .pill:hover { color: #fff; border-color: var(--gs-blue-bright); box-shadow: var(--glow); transform: translateY(-3px); }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* Reduced motion: static, wrapped list without the duplicate set */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { mask-image: none; justify-content: center; }
+    .track { animation: none; flex-wrap: wrap; justify-content: center; padding: 0 28px; max-width: var(--maxw); }
+    .dup { display: none; }
+  }
+</style>

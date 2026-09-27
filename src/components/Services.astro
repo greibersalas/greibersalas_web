@@ -1,0 +1,46 @@
+---
+import { services } from '../data/site';
+---
+<section id="servicios">
+  <div class="container">
+    <span class="tag-label reveal">Servicios</span>
+    <h2 class="sec-title reveal">Capacidades de extremo a extremo</h2>
+    <p class="sec-sub reveal">Acompaño cada proyecto desde la estrategia técnica hasta el despliegue. Sin intermediarios, sin cabos sueltos.</p>
+    <div class="grid">
+      {services.map((s) => (
+        <article class="card reveal" data-tilt>
+          <div class="card-glow"></div>
+          <span class="card-icon">{s.icon}</span>
+          <span class="num mono">{s.n}</span>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .card {
+    position: relative; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 40px 36px; overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s; cursor: default;
+  }
+  .card-glow { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(30,91,255,0.22), transparent 65%); opacity: 0; transition: opacity 0.4s; pointer-events: none; left: var(--mx, 50%); top: var(--my, 50%); transform: translate(-50%,-50%); }
+  .card:hover { transform: translateY(-6px); border-color: var(--line-bright); }
+  .card:hover .card-glow { opacity: 1; }
+  .card-icon { font-size: 1.6rem; color: var(--gs-blue-bright); display: block; }
+  .num { color: var(--text-3); font-weight: 500; font-size: 0.85rem; position: absolute; top: 36px; right: 36px; }
+  .card h3 { font-size: 1.4rem; margin: 18px 0 12px; position: relative; }
+  .card p { color: var(--text-2); font-size: 1rem; position: relative; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach(card => {
+    card.addEventListener('mousemove', (e: MouseEvent) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+</script>
